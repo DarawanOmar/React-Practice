@@ -1,5 +1,6 @@
 import React from "react";
-import RunReactQuery from "./componets/ReactQuery/RunReactQuery";
+import RunCustomHook from "./componets/CustomHook/RunCustomHook";
+// import RunReactQuery from "./componets/ReactQuery/RunReactQuery";
 // import RunRedux from "./componets/redux/RunRedux";
 // import RunUseContext from "./componets/useContext/RunUseContext";
 //import RunUseForm from './componets/FormValidation/RunUseForm'
@@ -12,7 +13,8 @@ function App() {
       {/* <RunRedux/> */}
       {/* <RunUseContext/> */}
       {/*<RunUseForm />*/} 
-      <RunReactQuery/>
+      {/* <RunReactQuery/> */}
+      <RunCustomHook/>
     </div>
 
   );

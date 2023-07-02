@@ -1,7 +1,7 @@
 import React from "react";
-import RunCustomHook from "./componets/CustomHook/RunCustomHook";
+// import RunCustomHook from "./componets/CustomHook/RunCustomHook";
 // import RunReactQuery from "./componets/ReactQuery/RunReactQuery";
-// import RunRedux from "./componets/redux/RunRedux";
+import RunRedux from "./componets/redux/login&logout/RunRedux";
 // import RunUseContext from "./componets/useContext/RunUseContext";
 //import RunUseForm from './componets/FormValidation/RunUseForm'
 function App() {  
@@ -10,11 +10,11 @@ function App() {
 
     <div className="App">
 
-      {/* <RunRedux/> */}
+      <RunRedux/>
       {/* <RunUseContext/> */}
       {/*<RunUseForm />*/} 
       {/* <RunReactQuery/> */}
-      <RunCustomHook/>
+      {/* <RunCustomHook/> */}
     </div>
 
   );

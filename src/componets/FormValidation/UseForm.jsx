@@ -5,7 +5,7 @@ import {yupResolver} from "@hookform/resolvers/yup"
 
 const UseForm = () => {
 
-    // 
+
     const schema = yup.object().shape({
         fullname : yup.string().required("تکایە ناوەکەت بنووسە"),
         email : yup.string().email("شێوەی ئیمەیڵی نییە").required("تکایە ئیمەیڵەکەت بنووسە"),

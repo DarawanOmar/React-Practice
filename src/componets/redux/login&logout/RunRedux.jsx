@@ -4,9 +4,11 @@ import Profile from "./pages/Profile";
 import NavbarRedux from "./NavbarRedux";
 import { Provider } from "react-redux";
 import { store } from "./Store";
+
 const RunRedux = () => {
     return ( 
         <div>
+            {/* Login & Logout Components */}
             <Provider store={store}>
             <BrowserRouter>
             <NavbarRedux/>
@@ -16,6 +18,7 @@ const RunRedux = () => {
                 </Routes>
             </BrowserRouter>
             </Provider>
+
         </div>
      );
 }

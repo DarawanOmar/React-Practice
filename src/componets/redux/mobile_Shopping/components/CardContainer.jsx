@@ -2,6 +2,8 @@ import React from 'react'
 import CartIteam from './CartIteam'
 import { useSelector , useDispatch} from 'react-redux'
 import { clearCart } from '../features/cart/cartSlice'
+import { openModal } from '../features/modal/modalSlice'
+
 
 const CardContainer = () => {
 
@@ -31,10 +33,12 @@ const CardContainer = () => {
 
             <footer className='mt-16 md:mt-0'>
                 <hr />
-                <h1> Total : <span>{total}</span> $ </h1>
+                <h1> Total : <span>{total.toFixed(2)}</span> $ </h1>
                 <div>
                     <button 
-                    onClick={() => dispatch(clearCart())}
+                    onClick={() => {
+                        dispatch(openModal())
+                    }}
                     className='text-rose-500 bg-white border-2 border-rose-500 px-8 py-1 rounded-md hover:bg-rose-500 hover:text-white hover:duration-700 font-bold mt-4'> 
                     CLEAR CART
                     </button>

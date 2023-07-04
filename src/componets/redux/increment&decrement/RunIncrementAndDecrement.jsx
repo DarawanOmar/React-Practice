@@ -1,14 +1,14 @@
 import React from 'react'
+import Counter from './features/Counter'
 import { Provider } from 'react-redux'
 import { store } from './store'
-import Counter from './features/Counter'
-
 const RunIncrementAndDecrement = () => {
   return (
     <div>
-        <Provider store={store}>
-            <Counter/>
-        </Provider>
+      <Provider store={store}>
+        <Counter/>
+      </Provider>
+
     </div>
   )
 }

@@ -1,30 +1,33 @@
 import React from 'react'
 import { useState } from 'react'
-import {useDispatch, useSelector } from 'react-redux'
-import { increment , decrement , reset , incrementByAmount } from './countSlice'
+import { useDispatch , useSelector } from 'react-redux';
+import { decrement , increment , reset , incrementByAmount } from './countSlice';
+
 const Counter = () => {
 
-    const count = useSelector((state) => state.counter.count);
-    const dispatch = useDispatch();
+
     const [incrementAmount , setIncrementAmount] = useState(0);
+    const count = useSelector((state)=> state.counter.count);
+    const dispatch = useDispatch();
+
     const addValue = Number(incrementAmount) || 0;
-    const resetAll = () =>{
+
+    const resetAll = ()=>{
         setIncrementAmount(0)
         dispatch(reset())
     }
 
-
   return (
     <div>
         <div className='text-4xl font-serif'>
-            <h1 className='text-center my-20 text-7xl'>{count}</h1>
+            <h1 className='text-center my-20 text-7xl'>{count} </h1>
             <div className='space-x-4 my-4  text-center items-center'>
                 <button onClick={() => resetAll()} className='bg-black text-white px-4 py-2 rounded-md hover:opacity-75 hover:duration-700'>سڕینەوە</button>
-                <button onClick={() => dispatch(decrement())} className='bg-black text-white px-4 py-2 rounded-md hover:opacity-75 hover:duration-700'>کەمکردن</button>
-                <button onClick={() => dispatch(increment())} className='bg-black text-white px-4 py-2 rounded-md hover:opacity-75 hover:duration-700'>زیادکردن</button>
+                <button onClick={()=> dispatch(decrement())} className='bg-black text-white px-4 py-2 rounded-md hover:opacity-75 hover:duration-700'>کەمکردن</button>
+                <button onClick={()=> dispatch(increment())} className='bg-black text-white px-4 py-2 rounded-md hover:opacity-75 hover:duration-700'>زیادکردن</button>
                 <div className='space-x-6 m-6 '>
                     <input value={incrementAmount} onChange={(e)=> setIncrementAmount(e.target.value)} type="text" placeholder='ژماردن' className='text-center border-2 border-black rounded-md p-2 my-4 w-[380px]' />
-                    <button onClick={() => dispatch(incrementByAmount(addValue))} className=' bg-black text-white px-4 py-2 rounded-md hover:opacity-75 hover:duration-700'>زیادکردن بەپێ ژماردن</button>
+                    <button onClick={()=> dispatch(incrementByAmount(addValue))} className=' bg-black text-white px-4 py-2 rounded-md hover:opacity-75 hover:duration-700'>زیادکردن بەپێ ژماردن</button>
                 </div>
             </div>
         </div>

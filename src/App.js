@@ -5,8 +5,10 @@ import React from "react";
 // import RunRedux from "./componets/redux/login&logout/RunRedux";
 // import RunUseContext from "./componets/useContext/RunUseContext";
 //import RunUseForm from './componets/FormValidation/RunUseForm'
-import RunIncrementAndDecrement from "./componets/redux/increment&decrement/RunIncrementAndDecrement";
-
+// import RunIncrementAndDecrement from "./componets/redux/increment&decrement/RunIncrementAndDecrement";
+import RunMobileShopping from "./componets/redux/mobile_Shopping/RunMobileShopping";
+import { Provider } from "react-redux";
+import { store } from "./componets/redux/mobile_Shopping/store";
 function App() {  
 
   return (
@@ -18,7 +20,10 @@ function App() {
       {/*<RunUseForm />*/} 
       {/* <RunReactQuery/> */}
       {/* <RunCustomHook/> */}
-      <RunIncrementAndDecrement />
+      {/* <RunIncrementAndDecrement /> */}
+      <Provider store={store}>
+      <RunMobileShopping/>
+      </Provider>
     </div>
 
   );

@@ -6,9 +6,8 @@ import React from "react";
 // import RunUseContext from "./componets/useContext/RunUseContext";
 //import RunUseForm from './componets/FormValidation/RunUseForm'
 // import RunIncrementAndDecrement from "./componets/redux/increment&decrement/RunIncrementAndDecrement";
-import RunMobileShopping from "./componets/redux/mobile_Shopping/RunMobileShopping";
-import { Provider } from "react-redux";
-import { store } from "./componets/redux/mobile_Shopping/store";
+// import RunMobileShopping from "./componets/redux/mobile_Shopping/RunMobileShopping";
+import RunMainMobileShopping from "./componets/redux/mobile_Shopping/RunMainMobileShopping";
 function App() {  
 
   return (
@@ -21,9 +20,7 @@ function App() {
       {/* <RunReactQuery/> */}
       {/* <RunCustomHook/> */}
       {/* <RunIncrementAndDecrement /> */}
-      <Provider store={store}>
-      <RunMobileShopping/>
-      </Provider>
+      <RunMainMobileShopping/>
     </div>
 
   );

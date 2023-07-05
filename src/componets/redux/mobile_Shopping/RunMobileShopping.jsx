@@ -12,7 +12,7 @@ const RunMobileShopping = () => {
     const dispatch = useDispatch()
     const {cartItems , isLoading } = useSelector((store)=> store.carts)
     useEffect(()=>{
-        dispatch(calculateTotal())
+      dispatch(calculateTotal())
     },[cartItems])
     const {isOpen} = useSelector((store)=> store.modal)
 

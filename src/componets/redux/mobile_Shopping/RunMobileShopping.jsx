@@ -5,6 +5,7 @@ import { calculateTotal , getCartItems} from './features/cart/cartSlice'
 import { useSelector , useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import Modal from './components/Modal'
+import ScaleLoader  from 'react-spinners/ScaleLoader'
 
 
 const RunMobileShopping = () => {
@@ -19,12 +20,15 @@ const RunMobileShopping = () => {
     useEffect(()=>{
       dispatch(getCartItems())
     },[])
+    
 
     if(isLoading){
+      
       return(
-        <div className='text-center text-5xl text-rose-500'>
-          Loading...
-        </div>
+      <div className='flex flex-col justify-center items-center h-screen'>
+        <h1 className='text-4xl font-bold font-serif'> Loading..</h1>
+         <ScaleLoader size={100} color='#36d7b7' height="200" width='50' />
+      </div>    
       )
     }
   

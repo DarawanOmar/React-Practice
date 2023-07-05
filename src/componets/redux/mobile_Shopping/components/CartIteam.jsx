@@ -20,7 +20,7 @@ export const CartIteam = ({id,amount,price,img,title}) => {
                 <h1> Price:{price}$</h1>
                 <button 
                 onClick={() => dispatch(removeItem(id))}
-                className='bg-indigo-500 text-white px-2 rounded-md hover:opacity-75 hover:duration-700'>remove</button>
+                className='bg-white  text-indigo-500 border-2 border-indigo-500 hover:bg-indigo-500  hover:text-white  px-2 rounded-md hover:opacity-75 hover:duration-700'>remove</button>
             </div>
             
             <div className='col-span-2 flex flex-col items-center '>

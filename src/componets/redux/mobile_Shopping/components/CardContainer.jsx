@@ -1,7 +1,6 @@
 import React from 'react'
 import CartIteam from './CartIteam'
 import { useSelector , useDispatch} from 'react-redux'
-import { clearCart } from '../features/cart/cartSlice'
 import { openModal } from '../features/modal/modalSlice'
 
 
@@ -9,6 +8,7 @@ const CardContainer = () => {
 
     const dispatch = useDispatch();
     const { cartItems , amount , total} = useSelector((store)=> store.carts);
+
 
     if(amount < 1){
         return(
@@ -20,10 +20,11 @@ const CardContainer = () => {
     }
 
   return (
-
-        <section className='text-center font-bold'>
+    
+    <div>
+        <section className='text-center '>
             <header>
-            <h1 className='text-4xl my-10'> Your Bag</h1>
+            <h1 className='text-4xl my-10 font-bold uppercase'>  Your Bag</h1>
             </header>
             <div>
                 {cartItems.map((item) => {
@@ -44,9 +45,9 @@ const CardContainer = () => {
                     </button>
                 </div>
             </footer>
-
+            
         </section>
-
+        </div>
   )
 }
 

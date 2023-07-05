@@ -13,12 +13,13 @@ const RunMobileShopping = () => {
     useEffect(()=>{
         dispatch(calculateTotal())
     },[cartItems])
-
     const {isOpen} = useSelector((store)=> store.modal)
+
+
 
   return (
     <div>
-       { isOpen && < Modal/> }
+     { isOpen && <Modal/> }
         <Navbar/>
         <CardContainer/>
     </div>

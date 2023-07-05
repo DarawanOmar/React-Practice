@@ -25,8 +25,8 @@ const RunMobileShopping = () => {
     if(isLoading){
       
       return(
-      <div className='flex flex-col justify-center items-center h-screen'>
-        <h1 className='text-4xl font-bold font-serif'> Loading..</h1>
+      <div className='flex flex-col justify-center items-center h-screen '>
+        <h1 className='text-4xl font-bold font-serif my-8'> Loading..</h1>
          <ScaleLoader size={100} color='#36d7b7' height="200" width='50' />
       </div>    
       )

@@ -6,7 +6,7 @@ const Modal = () => {
     const dispatch = useDispatch();
   return (
     <div>
-        <div className=" absolute inset-0 bg-black bg-opacity-20 backdrop-blur-sm flex justify-center items-center ">
+        <div className=" fixed inset-0 bg-black bg-opacity-20 backdrop-blur-sm flex justify-center items-center ">
             <div className="flex flex-col justify-center  items-center font-serif bg-white max-w-max mx-auto p-5">
             <h1 className='mb-8'> Remove All Item From Your Shopping Cart ?</h1>
             <div className="flex space-x-8">

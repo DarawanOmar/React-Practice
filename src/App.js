@@ -1,4 +1,5 @@
 import React from "react";
+import RunPost2 from "./componets/redux/Post2/RunPost2";
 
 // import RunCustomHook from "./componets/CustomHook/RunCustomHook";
 // import RunReactQuery from "./componets/ReactQuery/RunReactQuery";
@@ -7,7 +8,9 @@ import React from "react";
 //import RunUseForm from './componets/FormValidation/RunUseForm'
 // import RunIncrementAndDecrement from "./componets/redux/increment&decrement/RunIncrementAndDecrement";
 // import RunMobileShopping from "./componets/redux/mobile_Shopping/RunMobileShopping";
-import RunMainMobileShopping from "./componets/redux/mobile_Shopping/RunMainMobileShopping";
+// import RunMainMobileShopping from "./componets/redux/mobile_Shopping/RunMainMobileShopping";
+// import RunPost from "./componets/redux/Post/RunPost";
+
 function App() {  
 
   return (
@@ -20,7 +23,9 @@ function App() {
       {/* <RunReactQuery/> */}
       {/* <RunCustomHook/> */}
       {/* <RunIncrementAndDecrement /> */}
-      <RunMainMobileShopping/>
+      {/* <RunMainMobileShopping/> */}
+      {/* <RunPost/> */}
+      <RunPost2/>
     </div>
 
   );

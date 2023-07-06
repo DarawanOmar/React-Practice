@@ -5,7 +5,7 @@ import { store } from './store'
 import AddPostForm from './components/AddPostForm'
 const RunPost2 = () => {
   return (
-    <div  className='bg-black text-white max-w-2xl mx-auto'>
+    <div  className='bg-black text-white'>
         <Provider store={store}>
         <AddPostForm/>    
         <PostList/>

@@ -33,28 +33,28 @@ const AddPostForm = () => {
     )
 
   return (
-    <div>
+    <div className='max-w-2xl mx-auto font-serif'>
 
          <div>
-            <h1 className="font-bold text-green-500 text-center py-6 text-4xl font-serif"> Add a  New Post</h1>
-            <hr className="my-4 bg-white rounded-lg p-[1px] w-2/3 mx-auto"/>
-            <form className="text-center p-5 my-5">
-                <div className="border-2 border-white  rounded-md p-3">
+            <h1 className="font-bold text-green-500 text-center pt-8 text-4xl font-serif"> Add a  New Post</h1>
+            <hr className="my-8 bg-white rounded-lg p-[1px] w-2/3 mx-auto"/>
+            <form className="text-center p-5 my-5 shadow-xl border-2 border-white rounded-md">
+                <div className="border-2 border-white md:border-black  rounded-md p-3">
                     <div className="my-6 flex flex-col">
-                        <label >Post Title : </label>
+                        <label className='md:text-left text-xl '>Post Title : </label>
                         <input value={title} placeholder="Ex.Title" className="border-2 text-center text-black  border-black p-2 rounded-md " type="text" onChange={(e)=> setTitle(e.target.value)} />
                     </div>
 
-                    <select value={userId} className='text-black  font-bold font-serif w-2/3 rounded-sm p-1' onChange={(e)=> setUserId(e.target.value)}>
-                        <option value=""></option>
+                    <select value={userId} className='my-4 text-black  font-bold font-serif w-full rounded-sm p-2' onChange={(e)=> setUserId(e.target.value)}>
+                        <option value="" className='text-center'>Select User</option>
                         {optionUsers}
                     </select>
 
                     <div className="flex flex-col">
-                        <label > Content :</label>
+                        <label className='md:text-left text-xl '> Content :</label>
                         <input value={content} placeholder="Ex.Contact" className="border-2 text-center text-black  border-black p-2 rounded-md " type="text" onChange={(e)=> setContent(e.target.value)} />
                     </div>
-                    <button disabled={!canSave} onClick={onSubmitClickBtn} type="button"  className="hover:bg-white hover:text-black hover:duration-500 active:opacity-50 border-2 border-white  text-white my-4 px-4 py-2 rounded-md "> Save Post</button>
+                    <button disabled={!canSave} onClick={onSubmitClickBtn} type="button"  className=" hover:bg-white  hover:text-black hover:duration-500 active:opacity-50 border-2 border-white  text-white mt-8 px-4 py-2 rounded-md "> Save Post</button>
                 </div>
             </form>
         </div>

@@ -3,17 +3,20 @@ import { selectAllPosts } from "../features/post/postSlice";
 import React from 'react'
 import Users from "./Users";
 import TimeAgo from "./TimeAgo";
+import ReactionButton from "./ReactionButton";
 
 const PostList = () => {
 
     const posts = useSelector(selectAllPosts)
-    const rernderPosts = posts.map((post) => {
+    const orderedPost = posts.slice().sort((a,b)=>b.date.localeCompare(a.date))
+    
+    const rernderPosts = orderedPost.map((post) => {
         return (<div key={post.id} className="mb-4 shadow-xl font-serif">
             <div className="bg-gray-500 text-center border-2 border-white rounded-md py-5">
                 <h1> <span className="font-bold text-xl">Title :</span> {post.title}</h1>
                 <h1> <span className="font-bold text-xl">Content :</span> {post.content.substring(0,100)}</h1>
                 <h1 className="flex flex-col">  <Users userId={post.userId}/> <span> <TimeAgo timestamp={post.date}/></span> </h1>
-                
+                <h1> <ReactionButton post={post}/></h1>
             </div>
         </div>)
     })

@@ -11,12 +11,13 @@ import RunPost2 from "./componets/redux/Post2/RunPost2";
 // import RunMainMobileShopping from "./componets/redux/mobile_Shopping/RunMainMobileShopping";
 // import RunPost from "./componets/redux/Post/RunPost";
 
+
 function App() {  
+
 
   return (
 
     <div className="App">
-
       {/* <RunRedux/> */}
       {/* <RunUseContext/> */}
       {/*<RunUseForm />*/} 

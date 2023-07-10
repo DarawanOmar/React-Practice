@@ -7,8 +7,9 @@ import Table from './Table'
 const RunFetchAPI = () => {
 
     const url = 'https://jsonplaceholder.typicode.com/';
-    const [reqType,setReqType] = useState("");
+    const [reqType,setReqType] = useState("users");
     const [item , setItem] = useState([])
+    const [isLoading,setIsLoading] = useState(true)
 
     useEffect(()=>{
         
@@ -18,6 +19,7 @@ const RunFetchAPI = () => {
                 const response = await fetch(`${url}${reqType}`);
                 const data = await response.json(); 
                 setItem(data)
+                setIsLoading(false)
             } catch (error) {
                 console.log(error);
             }
@@ -26,6 +28,9 @@ const RunFetchAPI = () => {
         
     },[reqType])
 
+    if(isLoading){
+        return(<h1 className='text-center text-7xl text-rose-500 mt-28 font-bold'> Loading...  </h1>)
+    }
   return (
     <div>
         <Form setReqType={setReqType} reqType={reqType}/>

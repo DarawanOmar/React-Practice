@@ -1,10 +1,13 @@
 import { useForm } from "react-hook-form";
 import * as yup from "yup"
 import {yupResolver} from "@hookform/resolvers/yup"
+import { useState } from "react";
 
 
 const UseForm = () => {
 
+    const[name,setName] = useState()
+    const[name2,setName2] = useState()
 
     const schema = yup.object().shape({
         fullname : yup.string().required("تکایە ناوەکەت بنووسە"),
@@ -15,20 +18,21 @@ const UseForm = () => {
         
     })
 
-    const {register , handleSubmit , formState : {errors}} = useForm({
+    const {register , handleSubmit , formState : {errors} } = useForm({
         resolver : yupResolver(schema)
 
     })
 
     const onSubmit = (data) => {
         console.log(data)
+        setName2(data.fullname)
     }
     return ( 
         <div>
             <div className=" m-8 font-serif">
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col max-w-xl mx-auto border-2 border-indigo-500 p-8 rounded-md">
                         <label >FullName </label>
-                        <input type="text" className="border-2 border-indigo-500 p-2 rounded-md " {...register("fullname")} />
+                        <input onChange={(e)=>setName(e.target.value)} type="text" className="border-2 border-indigo-500 p-2 rounded-md " {...register("fullname")} />
                         <p className="text-rose-500 text-center font-serif font-bold ">{errors.fullname?.message}</p>
                         <label className="mt-4">Email </label>
                         <input type="text" className="border-2 border-indigo-500 p-2 rounded-md " {...register("email")} />
@@ -44,6 +48,9 @@ const UseForm = () => {
                         <p className="text-rose-500 text-center font-serif font-bold ">{errors.confirmPassword?.message}</p>
                         <button className="bg-indigo-500 text-white px-4 py-2 max-w-max mx-auto rounded-md mt-6 hover:opacity-75">Confirm </button>
                 </form>
+            <div className="max-w-xl mx-auto text-center">
+                <h1>{name2}</h1>
+            </div>
             </div>
         </div>
      );

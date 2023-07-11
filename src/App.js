@@ -1,7 +1,7 @@
 import React from "react";
-import RunFetchAPI from "./componets/Fetch_API/RunFetchAPI";
+import RunMainPostApplication from "./componets/PostApplicaton/RunMainPostApplication";
+// import RunFetchAPI from "./componets/Fetch_API/RunFetchAPI";
 // import RunPost2 from "./componets/redux/Post2/RunPost2";
-
 // import RunCustomHook from "./componets/CustomHook/RunCustomHook";
 // import RunReactQuery from "./componets/ReactQuery/RunReactQuery";
 // import RunRedux from "./componets/redux/login&logout/RunRedux";
@@ -28,7 +28,8 @@ function App() {
       {/* <RunMainMobileShopping/> */}
       {/* <RunPost/> */}
       {/* <RunPost2/> */}
-      <RunFetchAPI/>
+      {/* <RunFetchAPI/> */}
+      <RunMainPostApplication/>
     </div>
 
   );

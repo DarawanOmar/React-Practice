@@ -3,11 +3,12 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import Form from './Form';
 import ListItem from './ListItem'
+import { ScaleLoader } from 'react-spinners';
 import Table from './Table'
 const RunFetchAPI = () => {
 
     const url = 'https://jsonplaceholder.typicode.com/';
-    const [reqType,setReqType] = useState("users");
+    const [reqType,setReqType] = useState("comments");
     const [item , setItem] = useState([])
     const [isLoading,setIsLoading] = useState(true)
 
@@ -29,13 +30,17 @@ const RunFetchAPI = () => {
     },[reqType])
 
     if(isLoading){
-        return(<h1 className='text-center text-7xl text-rose-500 mt-28 font-bold'> Loading...  </h1>)
+        return(
+        <div className='text-center mt-48'>
+            <h1 className='text-6xl font-bold pb-8'> Loading.....</h1>
+            <ScaleLoader height={'200px'} width={'100px'} color='green'/>
+        </div>)
     }
   return (
     <div>
         <Form setReqType={setReqType} reqType={reqType}/>
-        {/* <ListItem item={item}/> */}
-        <Table item={item}/>
+        <ListItem item={item}/>
+        {/* <Table item={item}/> */}
 
     </div>
   )

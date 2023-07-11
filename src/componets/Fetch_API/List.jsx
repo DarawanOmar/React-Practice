@@ -2,9 +2,12 @@ import React from 'react'
 
 const List = ({item}) => {
   return (
-    <li>
-      {JSON.stringify(item)}
-    </li>
+    < >    
+
+      <li className='border-2 border-black'>{JSON.stringify(item)}</li>
+
+    </>
+
   )
 }
 

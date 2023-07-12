@@ -18,15 +18,9 @@ const RunMainPostApplication = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [isLoading , setisLoading] = useState(true)
-  const[search,setSearch] = useState();
-  const[searchResult,setSearchResult] = useState();
+  const[search,setSearch] = useState([]);
 
 
-  useEffect(()=>{
-    const PostSearchResult = posts.filter(post => (post.title).includes(search))
-    setSearchResult(PostSearchResult.reverse())
-  }
-  ,[posts , search])
 
   const onSubmit = () => {
     const newPostAdd = {id: nanoid(),title: title,body: body,date: format(new Date(), "MM dd yyyy pp")};
@@ -51,6 +45,7 @@ const RunMainPostApplication = () => {
       try {
         const res = await axios(url)
         setPosts(res.data)
+        setSearch(res.data)
         setisLoading(false)
       } catch (error) {     
           console.log(`Errorss : ${error.message}`);
@@ -59,7 +54,7 @@ const RunMainPostApplication = () => {
     Fetch_Data()
 
   } , [])
- 
+
   if(isLoading){
     return(
       <div className='text-center mt-64'>
@@ -73,9 +68,9 @@ const RunMainPostApplication = () => {
     <div className="max-w-3xl mx-auto">
       <Header />
       <BrowserRouter>
-        <NavBar  search={search} setSearch={setSearch}/>
+        <NavBar  posts={posts} setSearch={setSearch}/>
         <Routes>
-          <Route path="/" element={<Home posts={posts} />} />
+          <Route path="/" element={<Home posts={search} />} />
           <Route path="/newpost" element={ <NewPost onSubmit={onSubmit} title={title} body={body} setTitle={setTitle} setBody={setBody}/>}/>
           <Route path="/postpage/:id" element={<PostPage posts={posts} deletePost={deletePost} />}/>
           <Route path="/edit/:id"element={<Edit posts={posts} handleEdit={handleEdit} />}/>

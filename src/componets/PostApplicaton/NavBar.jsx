@@ -2,7 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 
-const NavBar = ({setSeatch , search}) => {
+const NavBar = ({setSearch , posts}) => {
+
+  const handleSearchResult = (e)=>{
+    if(!e.target.value) return setSearch(posts)
+
+    const resultArray = posts.filter(post => post.title.includes(e.target.value))
+    setSearch(resultArray)
+  }
 
 
   return (
@@ -13,8 +20,7 @@ const NavBar = ({setSeatch , search}) => {
           <input type="text"
             className='bg-white p-3 w-2/3'
             placeholder='Search'
-            value={search}
-            onChange={(e)=> setSeatch(e.target.value)}
+            onChange={handleSearchResult}
           />
         </form>
         <div className="max-w-3xl mx-auto flex justify-between items-center p-4 bg-black font-serif text-white ">

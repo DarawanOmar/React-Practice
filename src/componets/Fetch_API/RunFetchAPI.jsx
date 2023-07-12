@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Form from './Form';
 import ListItem from './ListItem'
 import { ScaleLoader } from 'react-spinners';
-import Table from './Table'
 const RunFetchAPI = () => {
 
     const url = 'https://jsonplaceholder.typicode.com/';
@@ -40,7 +39,6 @@ const RunFetchAPI = () => {
     <div>
         <Form setReqType={setReqType} reqType={reqType}/>
         <ListItem item={item}/>
-        {/* <Table item={item}/> */}
 
     </div>
   )

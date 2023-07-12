@@ -1,4 +1,5 @@
 import React from "react";
+// import RunSearching from "./componets/Searching/RunSearching";
 import RunMainPostApplication from "./componets/PostApplicaton/RunMainPostApplication";
 // import RunFetchAPI from "./componets/Fetch_API/RunFetchAPI";
 // import RunPost2 from "./componets/redux/Post2/RunPost2";
@@ -30,6 +31,7 @@ function App() {
       {/* <RunPost2/> */}
       {/* <RunFetchAPI/> */}
       <RunMainPostApplication/>
+      {/* <RunSearching/> */}
     </div>
 
   );

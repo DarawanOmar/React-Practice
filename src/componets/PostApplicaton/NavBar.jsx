@@ -7,7 +7,7 @@ const NavBar = ({setSearch , posts}) => {
   const handleSearchResult = (e)=>{
     if(!e.target.value) return setSearch(posts)
 
-    const resultArray = posts.filter(post => post.title.includes(e.target.value))
+    const resultArray = posts.filter(post => post.title.includes(e.target.value) ||  post.body.includes(e.target.value))
     setSearch(resultArray)
   }
 

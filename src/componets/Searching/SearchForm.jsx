@@ -9,7 +9,7 @@ const SearchForm = ({posts , setSearchResult}) => {
   const handelSetSearch = (e)=>{
     if(!e.target.value) return setSearchResult(posts)
 
-    const resultArray = posts.filter(post => post.title.includes(e.target.value))
+    const resultArray = posts.filter(post => post.title.includes(e.target.value) || post.body.includes(e.target.value))
     setSearchResult(resultArray)
   }
 

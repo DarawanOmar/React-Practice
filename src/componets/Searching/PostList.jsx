@@ -1,15 +1,17 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-import Posts from './Posts'
-const PostList = ({searchResults}) => {
 
-  const posts = searchResults.map(post => {
-  return <Posts key={post.id} post ={post}/>
-})
-
+const PostList = ({post}) => {
   return (
-    <div>
-      {posts}
+    <div  className='flex flex-col gap-4 shadow-xl p-6 mb-4 text-white border-2 '>
+      <Link to={`/postpage/${post.id}`}>
+        <h1 className='text-2xl font-bold '>Title :  {(post.title).length <=20 ? post.title : ` ${(post.title).slice(0,20)}.....`} </h1>
+      </Link>
+      <Link to={`/postpage/${post.id}`}>
+        <p> Body : {(post.body).length <=60 ? post.title : `${(post.title).slice(0,60)}.....`}</p>
+      </Link>
+      <h1>ID :  {post.id}</h1>
     </div>
   )
 }

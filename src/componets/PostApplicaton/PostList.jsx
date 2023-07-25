@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const PostList = ({post}) => {
   return (
-    <div className=' shadow-xl m-2 md:m-0 '>
+    <div className=' shadow-xl m-2 md:mb-6 border-2  '>
       
         <div className='p-2  flex flex-col'>
             <Link to={`/postpage/${post.id}`} className='text-2xl font-bold '>{(post.title).length <= 20 ? post.title : `${(post.title).slice(0,20)}......`}</Link>

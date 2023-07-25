@@ -9,7 +9,7 @@ const PostList = ({post}) => {
         <h1 className='text-2xl font-bold '>Title :  {(post.title).length <=20 ? post.title : ` ${(post.title).slice(0,20)}.....`} </h1>
       </Link>
       <Link to={`/postpage/${post.id}`}>
-        <p> Body : {(post.body).length <=60 ? post.title : `${(post.title).slice(0,60)}.....`}</p>
+        <p> Body : {(post.body).length <=60 ? post.body : `${(post.body).slice(0,60)}.....`}</p>
       </Link>
       <h1>ID :  {post.id}</h1>
     </div>

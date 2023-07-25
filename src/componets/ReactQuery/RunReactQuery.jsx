@@ -4,10 +4,10 @@ import Profile from "./pages/Profile";
 import NavbarReactQuery from "./NavbarReactQuery";
 import { QueryClient , QueryClientProvider } from "@tanstack/react-query";
 const RunReactQuery = () => {
-    const client = new QueryClient();
+    const clientProvider = new QueryClient();
     return ( 
         <div>
-            <QueryClientProvider client={client}>
+            <QueryClientProvider client={clientProvider}>
             <BrowserRouter>
             <NavbarReactQuery/>
                 <Routes>

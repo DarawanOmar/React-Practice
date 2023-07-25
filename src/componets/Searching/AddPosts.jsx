@@ -1,18 +1,43 @@
 import React, { useState } from 'react'
 import { nanoid } from '@reduxjs/toolkit'
 import { useNavigate } from 'react-router-dom'
+import apiRequest from './api/apiRequest'
+import api from './api/posts'
 
+const AddPosts = ({setPosts , posts , setError}) => {
 
-const AddPosts = ({setPosts , posts}) => {
+  const url = 'http://localhost:3500/Posts1';
   const [title,setTitle] = useState()
   const [body,setBody] = useState()
   const navigate = useNavigate()
 
 
-  const handleSavePost = ()=>{
-    const newPost = {id:nanoid(),title : title , body : body}
-    setPosts([newPost,...posts])
-    navigate('/')
+  const handleSavePost = async () => {
+    // const newPost = {id:nanoid(),title : title , body : body};
+    // const Posts = [newPost,...posts];
+    // setPosts(Posts);
+    // navigate('/');
+    // post --> zyad krdn
+    // get --> henanawa 
+    // patch --> update 
+    // delete --> raskrdnawa 
+    // const optionPost = {
+      //   method:'POST',
+      //   headers : {
+        //     "Content-Type" : "application/json"
+        //   },
+        //   body: JSON.stringify(newPost)
+        // }
+        // const result = await apiRequest(url,optionPost)
+        // if(result) setError(result)
+        
+      const newPost = {id:nanoid(),title : title , body : body};
+      const resul = await api.post(`/Posts1`,newPost)
+      const Posts = [resul.data,...posts];
+      setPosts(Posts);
+      navigate('/');
+
+
   }
 
   return (

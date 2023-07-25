@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useContext } from 'react'
+import { DataContext } from './Context/DataContext'
 
-const Edit = ({ posts, handleEdit }) => {
+
+const Edit = () => {
+
+  const { posts ,setPosts} = useContext(DataContext)
+
+
   const { id } = useParams();
   const post = posts.find(post => post.id.toString() === id);
 
@@ -14,6 +21,10 @@ const Edit = ({ posts, handleEdit }) => {
     e.preventDefault();
     handleEdit(post.id, editTitle, editBody);
     navigate(`/postpage/${post.id}`);
+  };
+
+  const handleEdit = (id, updatedTitle, updatedBody) => {
+    setPosts(posts.map(post => post.id === id ? { ...post, title: updatedTitle, body: updatedBody } : post) );
   };
 
   return (

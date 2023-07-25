@@ -1,14 +1,32 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-const NewPost = ({onSubmit , setTitle ,body , title, setBody}) => {
+import { useState } from 'react';
+import { nanoid } from '@reduxjs/toolkit';
+import format from 'date-fns/format';
+import { useContext } from 'react'
+import { DataContext } from './Context/DataContext'
 
+
+const NewPost = () => {
+
+
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
   const nagigate = useNavigate()
+  const {posts , setPosts} = useContext(DataContext)
+
 
   const submit =(e)=>{
     e.preventDefault();
     onSubmit();
     nagigate('/');
   }
+  const onSubmit = () => {
+    const newPostAdd = {id: nanoid(),title: title,body: body,date: format(new Date(), "MM dd yyyy pp")};
+    setPosts([newPostAdd, ...posts]);
+    setBody('');
+    setTitle('');
+  };
 
   return (
     <form  className='font-serif' >

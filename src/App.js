@@ -1,13 +1,14 @@
 import React from "react";
+// import App2 from "./Pagination/App2";
 // import RunSearching from "./componets/Searching/RunSearching";
-import RunMainPostApplication from "./componets/PostApplicaton/RunMainPostApplication";
+// import RunMainPostApplication from "./componets/PostApplicaton/RunMainPostApplication";
 // import RunFetchAPI from "./componets/Fetch_API/RunFetchAPI";
 // import RunPost2 from "./componets/redux/Post2/RunPost2";
 // import RunCustomHook from "./componets/CustomHook/RunCustomHook";
 // import RunReactQuery from "./componets/ReactQuery/RunReactQuery";
 // import RunRedux from "./componets/redux/login&logout/RunRedux";
 // import RunUseContext from "./componets/useContext/RunUseContext";
-// import RunUseForm from './componets/FormValidation/RunUseForm'
+import RunUseForm from './componets/FormValidation/RunUseForm'
 // import RunIncrementAndDecrement from "./componets/redux/increment&decrement/RunIncrementAndDecrement";
 // import RunMobileShopping from "./componets/redux/mobile_Shopping/RunMobileShopping";
 // import RunMainMobileShopping from "./componets/redux/mobile_Shopping/RunMainMobileShopping";
@@ -22,7 +23,7 @@ function App() {
     <div className="App">
       {/* <RunRedux/> */}
       {/* <RunUseContext/> */}
-      {/* <RunUseForm />  */}
+      <RunUseForm /> 
       {/* <RunReactQuery/> */}
       {/* <RunCustomHook/> */}
       {/* <RunIncrementAndDecrement /> */}
@@ -30,8 +31,9 @@ function App() {
       {/* <RunPost/> */}
       {/* <RunPost2/> */}
       {/* <RunFetchAPI/> */}
-      <RunMainPostApplication/>
+      {/* <RunMainPostApplication/> */}
       {/* <RunSearching/> */}
+      {/* <App2/> */}
     </div>
 
   );

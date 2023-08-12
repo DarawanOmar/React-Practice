@@ -11,7 +11,7 @@ const REGISTER_URL = `/register`
 const RunFormValidation = () => {
 
   // useEffect( ()=>{
-  //   const fetchData = async()=>{
+  //   const fetchData = async() => {
   //   try {
   //     const res = await axios.get(REGISTER_URL);
   //     console.log(res);

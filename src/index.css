@@ -3,3 +3,18 @@
 @tailwind utilities;
 
 
+@layer components {
+    .btn-action{
+      @apply bg-[#06c] text-white rounded-md px-4 py-1 mx-2  font-serif
+    }
+    .btn-warning {
+      @apply bg-rose-500 text-white px-4 py-1 mx-2 rounded-md  font-serif
+    }
+    .btn-success {
+      @apply bg-green-500 text-white px-4 py-1 mx-2 rounded-md  font-serif
+    }
+  
+    .btn-hover:hover{
+      @apply opacity-75 duration-500
+    }
+  }

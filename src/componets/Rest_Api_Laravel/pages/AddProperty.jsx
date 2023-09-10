@@ -1,0 +1,208 @@
+import React, { useEffect } from 'react'
+import { useState } from 'react'
+import { IoMdArrowRoundBack } from 'react-icons/io'
+import { Link} from 'react-router-dom'
+import axios from 'axios'
+import { useForm } from 'react-hook-form'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import Lottie from 'lottie-react'
+import loaderbuilding from '../components/build.json'
+import { Oval } from  'react-loader-spinner'
+import ModelAddImageProperty from '../components/ModelAddImageProperty'
+import { MdOutlinePlaylistAdd } from 'react-icons/md'
+
+
+const AddProperty = () => {
+    const [loader, setLoader] = useState(false)
+    const [sendLoader, setSendLoader] = useState(false)
+    const [showModel, setShowModel] = useState(false)
+    const [showAddRoom, setShowAddRoom] = useState(false)
+    const [error, setError] = useState([])
+    const [cities, setCities] = useState([])
+    const [user, setUser] = useState([])
+    const [Catigorey, setCatigorey] = useState([])
+    const [idProperty, setIdProperty] = useState([])
+    const schema = yup.object().shape({
+        title : yup.string().required("Write Your Title").min(3),
+        description : yup.string().required("Write Your Discription").min(10,"Please More Than 10 Character").max(200,"please less than 200 character"),
+        price : yup.number().typeError("Number").required("Write your Price").positive("Please enter Positive Number"),
+        area : yup.number().typeError("Number").required("Write your Area").positive("Please enter Positive Number"),
+        address : yup.string().required("Write your Address").min(6,"Atlest Write 6 Character").max(30,"Your Address So Long"),
+        catigorey_id : yup.number().required("Write your Catigorey"),
+        city_id : yup.number().required("Write your City"),
+        bedroom: yup.number().nullable().transform((value, originalValue) => originalValue === "" ? null : value).typeError("Number").positive("Positive"),
+        bathroom: yup.number().nullable().transform((value, originalValue) => originalValue === "" ? null : value).typeError("Number").positive("Positive"),
+        kitchen: yup.number().nullable().transform((value, originalValue) => originalValue === "" ? null : value).typeError("Number").positive("Positive"),
+        garage: yup.number().nullable().transform((value, originalValue) => originalValue === "" ? null : value).typeError("Number").positive("Positive"),
+        // bedroom : yup.number().nullable().typeError("Number").positive("Positive"),
+        // bathroom : yup.number().nullable().typeError("Number").positive("Positive"),
+        // kitchen : yup.number().nullable().typeError("Number").positive("Positive"),
+        // garage : yup.number().nullable().typeError("Number").positive("Positive"),
+        
+    })
+
+    const {formState:{errors} ,handleSubmit, register, reset} = useForm({
+        resolver : yupResolver(schema)
+    })
+
+
+    useEffect(()=>{
+        setLoader(true)
+        const fetchCatigoeryAndCitiy = async () =>{
+            const responseCatigoery = await axios.get('http://localhost:8000/api/catigories',{headers : {"Accept" : 'application/json','Content-Type' : "application/json"}})
+            const responseCities = await axios.get('http://localhost:8000/api/cities',{headers : {"Accept" : 'application/json','Content-Type' : "application/json"}})
+            const user = await axios.get('http://localhost:8000/api/profile', {headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }});
+            if(responseCatigoery&&responseCities&&user){
+                setCatigorey(responseCatigoery.data)
+                setCities(responseCities.data)
+                setUser(user.data)
+                setLoader(false)
+            }else{
+                setError("No Catigory");
+                setLoader(false)
+            }
+        }
+        fetchCatigoeryAndCitiy();
+    },[])
+    const submitForm = async (data) => {
+        try {
+            setSendLoader(true)
+            const response = await axios.post('http://localhost:8000/api/profile/properties/add', {...data,user_id:user?.id}, {headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }});
+            if(response){
+                reset()
+                setSendLoader(false)
+                setIdProperty(response.data.property.id)
+                setShowModel(true)
+            }else{
+                console.log("dwada");
+            }
+        } catch (error) {
+            setError(error.response.data.Errors);   
+        }
+    }
+    if(loader){
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <span className='text-center'><Oval height={80} width={80} color="#4251B2" wrapperStyle={{}} wrapperClass="" visible={true} ariaLabel='oval-loading' secondaryColor="#4251B2" strokeWidth={2} strokeWidthSecondary={2}/></span>
+            </div>
+        )
+    }
+    if(sendLoader){
+        return (
+            <div className="text-center mt-28 max-w-xs mx-auto">
+            <Lottie animationData={loaderbuilding} loop={true}/>
+            <h1 className='text-3xl mt-3 font-bold italic'>Loading...</h1>
+        </div>
+        )
+    }
+  return (
+    <div className="bg-blue-600 flex justify-center items-center h-screen ">
+    <div className=" bg-neutral-200 rounded-t-3xl w-full px-6">
+
+        <div className="mt-4 ml-0">
+            <Link to='/profile' className='cursor-pointer '><IoMdArrowRoundBack/></Link>
+            <h1 className='text-center font-bold text-xl mb-2'>Add Property</h1>
+        </div>
+        
+        {/* Error */}
+        {error.length > 0 ? <h1 className='text-center bg-rose-500 rounded-xl p-2 my-2 text-white'>{error[0]}</h1> : null}
+        <form onSubmit={handleSubmit(submitForm)}>
+            
+            {/*  Title*/}
+            <div className=' bg-white rounded-2xl p-2 my-3'>
+            {errors.title && <h1 className='text-rose-500 text-md text-center'>{errors.title?.message}</h1>}
+                <input {...register("title")} type="text" className='p-2 focus:outline-none ' placeholder='Title' />
+            </div>
+
+            {/* Discripton */}
+            <div className=' border-b-2 bg-white rounded-2xl p-2 my-3'>
+            {errors.description && <h1 className='text-rose-500 text-md text-center'>{errors.description?.message}</h1>}
+                <input {...register("description")} type="text" className='p-2 focus:outline-none ' placeholder='Discription' />
+            </div>
+
+            {/* Area & Price */}
+            <div className='flex items-center space-x-2'>
+                {/* Price */}
+                <div className='border-b-2 bg-white rounded-2xl p-2 my-3'>
+                    {errors.price && <h1 className='text-rose-500 text-md text-center'>{errors.price?.message}</h1>}
+                    <input {...register("price")} type="number" className='p-3 focus:outline-none w-1/2 rounded-xl  ' placeholder='Price' />
+                </div>
+
+                {/*  Area*/}
+                <div className='border-b-2 bg-white rounded-2xl p-2 my-3'>
+                    {errors.area && <h1 className='text-rose-500 text-md text-center'>{errors.area?.message}</h1>}
+                    <input {...register("area")} type="number" className='p-3 focus:outline-none w-1/2 rounded-xl  ' placeholder='Area' />
+                </div>
+            </div>
+
+            {/* City & Catigorey */}
+            <div className="flex justify-between items-center space-x-[1px] rounded-2xl">
+                <select name="a" {...register("catigorey_id")} id="dd" className='focus:outline-none p-2 rounded-md'>
+                    <option value="" disabled>Catigorey</option>
+                    {Catigorey.map(catigorey => {
+                        return <option key={catigorey.id} value={catigorey.id}>{catigorey.name}</option>
+                    })}
+                </select>
+                <select name="d" {...register("city_id")} id="aaa" className='focus:outline-none p-2 rounded-md'>
+                    <option value="" disabled>City</option>
+                    {cities.map(city => {
+                        return <option key={city.id} value={city.id}>{city.name}</option>
+                    })}
+                </select>
+               
+            </div>
+
+            {/*  Beth Bath Kitchen Garage*/}
+            <div className="flex justify-between items-center mt-2">
+                <h1>Add Room (Optional)</h1>
+                <span className='text-2xl ' onClick={()=>setShowAddRoom(prev => !prev)}><MdOutlinePlaylistAdd/></span>
+            </div>
+            <div className={showAddRoom ? " flex justify-between items-center space-x-2 duration-700 ease-in-out" : "-translate-x-[1000px] duration-700 ease-in-out"}>
+                {showAddRoom && (<>
+                <div className=''>
+                    {errors && <h1 className='text-rose-500'>{errors.bedroom?.message}</h1>}
+                    <input {...register("bedroom")} type="number" className='text-center focus:outline-none rounded-md py-2 w-full placeholder:text-center' placeholder='Bed' />
+                </div>
+                <div className=''>
+                    {errors && <h1 className='text-rose-500'>{errors.bathroom?.message}</h1>}
+                    <input {...register("bathroom")} type="number" className='text-center focus:outline-none rounded-md py-2 w-full placeholder:text-center' placeholder='Bath' />
+                </div>
+                <div className=''>
+                    {errors && <h1 className='text-rose-500'>{errors.kitchen?.message}</h1>}
+                    <input {...register("kitchen")} type="number" className='text-center focus:outline-none rounded-md py-2 w-full placeholder:text-center' placeholder='Kitchen' />
+                </div>
+                <div className=''>
+                    {errors && <h1 className='text-rose-500'>{errors.garage?.message}</h1>}
+                    <input {...register("garage")} type="number" className='w-full text-center focus:outline-none rounded-md py-2  placeholder:text-center' placeholder='Garage' />
+                </div>
+                </>)}
+            </div>
+
+            {/* Address */}
+            <div className='border-b-2 bg-white rounded-2xl p-2 my-3  '>
+                {errors.address && <h1 className='text-rose-500 text-md text-center'>{errors.address?.message}</h1>}
+                <input {...register("address")} type="text" className='p-2 focus:outline-none' placeholder='Address' />
+            </div>
+
+            {/* register Button */}
+            <div className='text-center mt-3 pb-[70px]'>
+                <button type='submit' className='bg-gradient-to-b from-indigo-500  via-indigo-700  to-indigo-500 text-white py-4 px-20 rounded-xl'>Add Property</button>
+            </div>
+
+        </form>
+    </div>
+    {showModel && <ModelAddImageProperty setShowModel={setShowModel} idProperty={idProperty}/> }
+</div>
+  )
+}
+
+export default AddProperty

@@ -1,7 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import url('https://fonts.googleapis.com/css2?family=Marhey&family=Roboto+Condensed:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Marhey&family=Roboto+Condensed:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Marhey&family=Merriweather:wght@300&family=Roboto+Condensed:wght@300&family=Work+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo&family=Marhey&family=Merriweather:wght@300&family=Roboto+Condensed:wght@300&family=Work+Sans&display=swap');
 
 @layer components {
     .btn-action{
@@ -18,3 +21,9 @@
       @apply opacity-75 duration-500
     }
   }
+
+
+html {
+  scroll-behavior: smooth;
+}
+

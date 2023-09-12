@@ -9,7 +9,7 @@ import axios from '../api/axios'
 import { useState } from 'react'
 import Tests from '../pages/Tests'
 
-const PropertiesUser = ({id,title, price, bedroom, bathroom, kitchen, area, city, catigorey}) => {
+const PropertiesUser = ({id,title, price, bedroom, bathroom, kitchen, area, city, catigorey, photos}) => {
 
     const [loader, setLoader] = useState(false)
     const [user, setuser] = useState([]);
@@ -37,7 +37,11 @@ const PropertiesUser = ({id,title, price, bedroom, bathroom, kitchen, area, city
     <div className='flex space-x-3   rounded-3xl bg-white'>
 
     {/* Image */}
-      <Link to={`/properties/property/${id}`}><img className='rounded-[20px] w-20 h-20' src="https://img.freepik.com/free-photo/new-buildings-with-green-areas_1122-1533.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph" alt="" /></Link>
+    {photos.length > 0 ?
+        <Link to={`/properties/property/${id}`}><img className='rounded-[20px] w-20 h-20' src={photos[0]} alt="Imahe" /></Link>
+       :
+        <Link to={`/properties/property/${id}`}><img className='rounded-[20px] w-20 h-20' src="https://img.freepik.com/free-photo/new-buildings-with-green-areas_1122-1533.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph" alt="" /></Link>
+        }
       
       {/* Texts */}
       <div className="">

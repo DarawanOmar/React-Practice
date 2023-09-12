@@ -3,12 +3,17 @@ import { FaBath, FaBed } from 'react-icons/fa'
 import { GiCampCookingPot } from 'react-icons/gi'
 import { ImLocation } from 'react-icons/im'
 
-const PropertyList = ({title, price, bedroom, bathroom, kitchen, area, city, catigorey, user, description}) => {
+const PropertyList = ({title, price, bedroom, bathroom, kitchen, area, city, catigorey, user, description, photos}) => {
   return (
     <div className=' '>
         <div className="bg-white rounded-2xl flex flex-col space-y-3 p-3">
             {/* Image */}
-            <img className='rounded-[35px] max-h-[160px] object-cover' src="https://img.freepik.com/free-photo/new-buildings-with-green-areas_1122-1533.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph" alt="" />
+            {photos.length > 0 ?
+              <img className='rounded-[35px] max-h-[160px] object-cover' src={photos[0]} alt="Imahe" />
+            :
+              <img className='rounded-[35px] max-h-[160px] object-cover' src="https://img.freepik.com/free-photo/new-buildings-with-green-areas_1122-1533.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph" alt="" />
+                }
+            {/* <img className='rounded-[35px] max-h-[160px] object-cover' src="https://img.freepik.com/free-photo/new-buildings-with-green-areas_1122-1533.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph" alt="" /> */}
             {/* name & Price */}
             <div className='flex justify-between items-center py-2'>
             <div className='font-bold text-xl flex items-center space-x-2 capitalize'>
@@ -33,7 +38,11 @@ const PropertyList = ({title, price, bedroom, bathroom, kitchen, area, city, cat
         </div>
         <div className="flex flex-col space-y-3 p-3 bg-white rounded-2xl my-8 ">
             <div className='flex items-center'>
-                <img className='w-12 h-12 object-cover rounded-xl' src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph" alt="" />
+                {user?.image ? 
+                    <img className='w-12 h-12 object-cover rounded-xl' src={user.photo} alt="user" />
+                :
+                    <img className='w-12 h-12 object-cover rounded-xl' src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg" alt="" />
+                }
                 <div className='ml-3'>
                     <h1 className='font-bold'>{user.name}</h1>
                     <h1>{user.email}</h1>

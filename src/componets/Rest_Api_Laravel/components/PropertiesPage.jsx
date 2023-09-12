@@ -4,16 +4,18 @@ import { GiCampCookingPot } from 'react-icons/gi'
 import { ImLocation } from 'react-icons/im'
 import { Link } from 'react-router-dom'
 
-const PropertiesPage = ({id, title, price, bedroom, bathroom, kitchen, area, city, catigorey}) => {
+const PropertiesPage = ({id, title, price, bedroom, bathroom, kitchen, area, city, catigorey, photos}) => {
 
 
   return (
     <div className='bg-white rounded-[30px] overflow-visible w-full '>
     <div className="flex flex-col space-y-3 p-3">
         {/* Image */}
-        <Link to={`/properties/property/${id}`}>
-          <img className='rounded-[40px] w-full max-h-[160px] object-cover' src="https://img.freepik.com/free-photo/new-buildings-with-green-areas_1122-1533.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph" alt="" />
-        </Link>
+        {photos.length > 0 ?
+        <Link to={`/properties/property/${id}`}><img className='rounded-[40px] w-full max-h-[160px] object-cover' src={photos[0]} alt="Imahe" /></Link>
+       :
+        <Link to={`/properties/property/${id}`}><img className='rounded-[40px] w-full max-h-[160px] object-cover' src="https://img.freepik.com/free-photo/new-buildings-with-green-areas_1122-1533.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph" alt="" /></Link>
+        }
         {/* name & Price */}
         <div className='flex justify-between items-center py-2'>
           <div className='font-bold text-xl flex items-center space-x-2 capitalize'>

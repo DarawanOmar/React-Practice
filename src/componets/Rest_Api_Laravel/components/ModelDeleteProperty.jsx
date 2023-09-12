@@ -20,9 +20,9 @@ const ModelDeleteProperty = ({setShowModel, id, deletePropery, setId}) => {
 }
 
   return (
-    <div className="fixed inset-0 z-10 bg-black bg-opacity-20 backdrop-blur-sm flex justify-center items-center font-serif">
+    <div className="fixed inset-0 z-10 bg-black bg-opacity-20 backdrop-blur-sm flex justify-center items-center ">
       <div className="flex flex-col px-3">
-        <div className= 'px-2 rounded-md bg-gradient-to-l from-indigo-400 from-10% via-indigo-700 via-90% to-indigo-400 to-10% text-white'>
+        <div className= 'px-2 rounded-md bg-gradient-to-r from-indigo-50  via-indigo-200  to-indigo-50 text-black'>
 
           <div className="flex justify-between items-center p-1">
               <h1 className='font-bold'>Delete Property</h1>

@@ -31,7 +31,7 @@ const Users = () => {
   },[search,user])
 
   return (
-    <div className='bg-neutral-200 h-screen'>
+    <div className='bg-neutral-200 '>
 
       {/* Top text Back Button */}
       <div className="flex justify-between items-center p-2">

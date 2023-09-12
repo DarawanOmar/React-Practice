@@ -157,12 +157,7 @@ const App = () => {
         </div>
         {/* Image slider */}
         <div className='bg-neutral-100'>
-        <Swiper
-            // watchSlidesProgress={true}
-            slidesPerView={width > 1024 ? 3.7 :  width > 770 ? 2.5 : width > 735 ? 2 :width > 600 ? 1.8 : 1.2 }
-            // spaceBetween={20}
-            // centeredSlides={false}
-        >
+        <Swiper slidesPerView={width > 1024 ? 3.7 :  width > 770 ? 2.5 : width > 735 ? 2 :width > 600 ? 1.8 : 1.2 } >
         {properties.map((item, index) => {
             return (
                 <SwiperSlide key={index} className=''>

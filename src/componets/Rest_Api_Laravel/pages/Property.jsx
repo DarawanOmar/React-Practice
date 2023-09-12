@@ -10,12 +10,14 @@ import CommentsList from '../components/CommentsList'
 import Tests from '../pages/Tests'
 
 const Property = () => {
-    const {id} = useParams()
-    const [addPropertyFavoraite, setAddPropertyFavoraite] = useState(false)
-    const [property, setProperty] = useState([])
-    const [comments, setComments] = useState([])
-    const [textComment, setTextComment] = useState('')
-    const [loader, setLoader] = useState(true)
+
+    const {id} = useParams();
+    const [addPropertyFavoraite, setAddPropertyFavoraite] = useState(false);
+    const [property, setProperty] = useState([]);
+    const [comments, setComments] = useState([]);
+    const [textComment, setTextComment] = useState('');
+    const [loader, setLoader] = useState(true);
+    const [reload, setReload] = useState(true);
 
     useEffect(()=>{
         const fetchData = async ()=>{
@@ -34,10 +36,10 @@ const Property = () => {
             }
         }
         fetchData();
-    },[])
+    },[reload])
 
-    const addPropertyToFavorairte = async() => {
-        const response = await axios.post(`http://localhost:8000/api/propertyfavoraite`,{property_id:id},{headers: {
+    const addPropertyToFavorairteAndComment = async() => {
+        const response = await axios.post(`http://localhost:8000/api/createtablefavoraite`,{ property_id:id, addtofavoraite:"true", comment:textComment },{headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -50,18 +52,6 @@ const Property = () => {
         }
     }
 
-    const addComment = async () =>{
-        const response = await axios.post(`http://localhost:8000/api/propertyfavoraite/addcomment/${id}`,{comment:textComment},{headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }})
-        if(response){
-            console.log("Added Comment SuccessFully");
-        }else{
-            console.log("Faild Add Comment");
-        }
-    }
 
     if(loader) {
         return (
@@ -104,10 +94,26 @@ const Property = () => {
                 <h1 className='text-xl font-bold mb-1 '>Property Details</h1>
             </div>
             <div className="p-2 bg-indigo-50 rounded-lg">
-                <span className=' text-indigo-600 text-xl'><button onClick={addPropertyToFavorairte}>{addPropertyFavoraite ? <MdBookmarkAdded/> : <MdBookmarkAdd/>}</button></span>
+                {/* <span className='text-indigo-600 text-xl'><button onClick={addPropertyToFavorairteAndComment}>{addPropertyFavoraite ? <MdBookmarkAdded/> : <MdBookmarkAdd/>}</button></span> */}
+        {comments.length > 0 ? 
+             <span className='text-indigo-600 text-xl'>
+                {comments[0].isfavoraite === "true" ? 
+                    <button>{ <MdBookmarkAdded/>}</button>
+                :
+                    <button onClick={() => {
+                        addPropertyToFavorairteAndComment()
+                        setReload(prev=>!prev)
+                    }}>{ <MdBookmarkAdd/>}</button>
+                }
+             </span>
+             : 
+             <span className='text-indigo-600 text-xl'><button onClick={() => {
+                addPropertyToFavorairteAndComment()
+                setReload(prev=>!prev)
+            }}>{ <MdBookmarkAdd/>}</button></span>
+             }
             </div>
         </div>
-
         {/* Property */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 mt-7">
             {property.map(item => {
@@ -120,7 +126,10 @@ const Property = () => {
         <div className="flex flex-col justify-center items-center mb-24 px-4">
             <h1 className='text-center font-bold'>You you can write your opinion about this proaperty</h1>
             <textarea onChange={(e)=>setTextComment(e.target.value)} type="text" className='p-2 text-center rounded-md w-full bg-gradient-to-r from-indigo-50  via-indigo-200  to-indigo-50 focus:outline-none placeholder:text-center' placeholder='Comment...'/>
-            <button onClick={addComment} className='bg-gradient-to-b from-indigo-500  via-indigo-700  to-indigo-500 px-6 py-2 mt-3 rounded-md text-white'>Post Comment</button>
+            <button onClick={() => {
+                addPropertyToFavorairteAndComment()
+                setReload(prev=>!prev)
+                }} className='bg-gradient-to-b from-indigo-500  via-indigo-700  to-indigo-500 px-6 py-2 mt-3 rounded-md text-white'>Post Comment</button>
         </div>
 
         {/* Comments */}

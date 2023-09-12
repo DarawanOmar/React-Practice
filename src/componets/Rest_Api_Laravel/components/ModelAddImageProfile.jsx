@@ -3,7 +3,7 @@ import axios from 'axios';
 import imageUpload from '../components/upload File.json';
 import Lottie from 'lottie-react';
 
-const ModelAddImageProperty = ({ idProperty, setShowModel }) => {
+const ModelAddImageProfile = ({ setShowAddImageProfile, setReload }) => {
     const [image, setImage] = useState(null);
 
     const handleImageChange = (event) => {
@@ -17,14 +17,15 @@ const ModelAddImageProperty = ({ idProperty, setShowModel }) => {
         formData.append('image', image);
 
         try {
-            const response = await axios.post(`http://localhost:8000/api/profile/properties/upload/image/${idProperty}`, formData,{headers: {
+            const response = await axios.post('http://localhost:8000/api/addimageprofile', formData,{headers: {
               'Authorization': `Bearer ${localStorage.getItem('token')}`,
               'Accept': 'application/json',
               'Content-Type': 'multipart/form-data'
           }});
 
-            if (!response.data.errors) {
-              setShowModel(false)
+            if (response.data.SuccessFull) {
+              setShowAddImageProfile(false)
+              setReload(prev => !prev)
             } else{
                 console.log("Faild Upload");
             }
@@ -38,7 +39,13 @@ const ModelAddImageProperty = ({ idProperty, setShowModel }) => {
             <div className="flex flex-col px-3">
                 <div className="px-2 rounded-md bg-gradient-to-r from-indigo-50  via-indigo-200  to-indigo-50">
                     <div className="flex justify-between items-center p-1">
-                        <h1 className="font-bold text-xl">Add Image Property</h1>
+                        <h1 className="font-bold text-xl">Add Image Profile</h1>
+                        <button
+                            onClick={() => setShowAddImageProfile(false)}
+                            className="bg-red-500 rounded-full w-5 h-5 flex justify-center items-center"
+                        >
+                            <span className="text-white">X</span>
+                        </button>
                     </div>
 
                     <form onSubmit={handleSubmit}>
@@ -65,4 +72,4 @@ const ModelAddImageProperty = ({ idProperty, setShowModel }) => {
     );
 };
 
-export default ModelAddImageProperty;
+export default ModelAddImageProfile;

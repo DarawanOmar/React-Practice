@@ -6,12 +6,16 @@ import { Link } from 'react-router-dom';
 
 const ListPropritesFavoraite = ({ property, id }) => {
 
-    return (
+  return (
     <div className='bg-white rounded-[30px] overflow-visible w-full '>
     <div className="flex flex-col space-y-3 p-3">
         {/* Image */}
         <Link to={`/properties/property/${id}`}>
-          <img className='rounded-[40px] w-full max-h-[160px] object-cover' src="https://img.freepik.com/free-photo/new-buildings-with-green-areas_1122-1533.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph" alt="" />
+          {property.photos.length > 0 ?
+            <img className='rounded-[40px] w-full max-h-[160px] object-cover' src={property.photos} alt="" />
+          :
+            <img className='rounded-[40px] w-full max-h-[160px] object-cover' src="https://img.freepik.com/free-photo/new-buildings-with-green-areas_1122-1533.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph" alt="" />
+          }
         </Link>
         {/* name & Price */}
         <div className='flex justify-between items-center py-2'>

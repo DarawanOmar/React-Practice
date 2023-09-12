@@ -4,8 +4,6 @@ import { FiSearch } from 'react-icons/fi';
 import axios from '../api/axios';
 import PropertiesPage from '../components/PropertiesPage';
 import { Link } from 'react-router-dom';
-import Lottie from 'lottie-react'
-import loaderbuilding from '../components/animation_lm5yh8pd.json'
 import { IoIosArrowBack } from 'react-icons/io';
 import RangeSliderPrice from '../components/RangeSliderPrice';
 import RangeSliderArea from '../components/RangeSliderArea';
@@ -19,7 +17,6 @@ const MAX_AREA = 1000;
 const Properties = () => {
   const [properties, setProperties] = useState([]);
   const [search, setSearch] = useState('');
-  const [page, setPage] = useState(1);
   const [loader, setLoader] = useState(true)
   const [filter, setFilter] = useState(false)
   const [valuesPrice, setValuesPrice] = useState([MIN_PRICE, MAX_PRICE]);
@@ -37,9 +34,6 @@ const Properties = () => {
     }, 1500);
   },[])
   
-  const seeMore = () => {
-    setPage(page + 1)
-  }
   
   const handleFilter = async () => {
     const response = await axios.get(`http://localhost:8000/api/properties?area[0]=${valuesArea[0]}&area[1]=${valuesArea[1]}&price[0]=${valuesPrice[0]}&price[1]=${valuesPrice[1]}`)
@@ -53,7 +47,6 @@ const searach =  (name) => {
       return  cityOrCatigorey.catigorey.name.toLowerCase().includes(name.toLowerCase()) || cityOrCatigorey.city.name.toLowerCase().includes(name.toLowerCase())
   })
   setProperties(filterCityOrCatigory)
-  // console.log(filterCityOrCatigory);
 
 }
 
@@ -174,12 +167,7 @@ const handleSearch = (name) => {
           return <PropertiesPage key={index} {...property} />
         })}
       </div>
-        
-        <div className="text-center">
-          {properties.length < 100 && (
-            <button onClick={seeMore } className='btn-action mb-10'>See More</button>
-          )}
-        </div>
+      
 
     </div>
   )

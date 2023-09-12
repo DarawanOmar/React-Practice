@@ -35,10 +35,6 @@ const AddProperty = () => {
         bathroom: yup.number().nullable().transform((value, originalValue) => originalValue === "" ? null : value).typeError("Number").positive("Positive"),
         kitchen: yup.number().nullable().transform((value, originalValue) => originalValue === "" ? null : value).typeError("Number").positive("Positive"),
         garage: yup.number().nullable().transform((value, originalValue) => originalValue === "" ? null : value).typeError("Number").positive("Positive"),
-        // bedroom : yup.number().nullable().typeError("Number").positive("Positive"),
-        // bathroom : yup.number().nullable().typeError("Number").positive("Positive"),
-        // kitchen : yup.number().nullable().typeError("Number").positive("Positive"),
-        // garage : yup.number().nullable().typeError("Number").positive("Positive"),
         
     })
 
@@ -120,13 +116,13 @@ const AddProperty = () => {
             {/*  Title*/}
             <div className=' bg-white rounded-2xl p-2 my-3'>
             {errors.title && <h1 className='text-rose-500 text-md text-center'>{errors.title?.message}</h1>}
-                <input {...register("title")} type="text" className='p-2 focus:outline-none ' placeholder='Title' />
+                <input {...register("title")} type="text" className='p-2 focus:outline-none w-full text-center placeholder:text-center' placeholder='Title' />
             </div>
 
             {/* Discripton */}
             <div className=' border-b-2 bg-white rounded-2xl p-2 my-3'>
             {errors.description && <h1 className='text-rose-500 text-md text-center'>{errors.description?.message}</h1>}
-                <input {...register("description")} type="text" className='p-2 focus:outline-none ' placeholder='Discription' />
+                <input {...register("description")} type="text" className='p-2 focus:outline-none w-full text-center placeholder:text-center' placeholder='Discription' />
             </div>
 
             {/* Area & Price */}
@@ -134,25 +130,25 @@ const AddProperty = () => {
                 {/* Price */}
                 <div className='border-b-2 bg-white rounded-2xl p-2 my-3'>
                     {errors.price && <h1 className='text-rose-500 text-md text-center'>{errors.price?.message}</h1>}
-                    <input {...register("price")} type="number" className='p-3 focus:outline-none w-1/2 rounded-xl  ' placeholder='Price' />
+                    <input {...register("price")} type="number" className='p-3 focus:outline-none rounded-xl  w-full text-center placeholder:text-center' placeholder='Price' />
                 </div>
 
                 {/*  Area*/}
                 <div className='border-b-2 bg-white rounded-2xl p-2 my-3'>
                     {errors.area && <h1 className='text-rose-500 text-md text-center'>{errors.area?.message}</h1>}
-                    <input {...register("area")} type="number" className='p-3 focus:outline-none w-1/2 rounded-xl  ' placeholder='Area' />
+                    <input {...register("area")} type="number" className='p-3 focus:outline-none rounded-xl  w-full text-center placeholder:text-center' placeholder='Area' />
                 </div>
             </div>
 
             {/* City & Catigorey */}
-            <div className="flex justify-between items-center space-x-[1px] rounded-2xl">
-                <select name="a" {...register("catigorey_id")} id="dd" className='focus:outline-none p-2 rounded-md'>
+            <div className="flex justify-between items-center space-x-2">
+                <select name="a" {...register("catigorey_id")} id="dd" className='focus:outline-none p-2 rounded-md w-full text-center'>
                     <option value="" disabled>Catigorey</option>
                     {Catigorey.map(catigorey => {
                         return <option key={catigorey.id} value={catigorey.id}>{catigorey.name}</option>
                     })}
                 </select>
-                <select name="d" {...register("city_id")} id="aaa" className='focus:outline-none p-2 rounded-md'>
+                <select name="d" {...register("city_id")} id="aaa" className='focus:outline-none p-2 rounded-md w-full text-center'>
                     <option value="" disabled>City</option>
                     {cities.map(city => {
                         return <option key={city.id} value={city.id}>{city.name}</option>
@@ -190,7 +186,7 @@ const AddProperty = () => {
             {/* Address */}
             <div className='border-b-2 bg-white rounded-2xl p-2 my-3  '>
                 {errors.address && <h1 className='text-rose-500 text-md text-center'>{errors.address?.message}</h1>}
-                <input {...register("address")} type="text" className='p-2 focus:outline-none' placeholder='Address' />
+                <input {...register("address")} type="text" className='p-2 focus:outline-none w-full text-center placeholder:text-center' placeholder='Address' />
             </div>
 
             {/* register Button */}

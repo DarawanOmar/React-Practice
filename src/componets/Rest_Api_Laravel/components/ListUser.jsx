@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 
 
-const ListUser = ({id,name,email}) => {
+const ListUser = ({ id, name, email, image ,photo}) => {
     const[loader,setLoader] = useState(true)
     
     useEffect(()=>{ setTimeout(() => {
@@ -20,7 +20,11 @@ const ListUser = ({id,name,email}) => {
   return (
     <div className="flex justify-between bg-white rounded-2xl p-2">
         <div className="">
-            <img className='w-16 h-16 rounded-[10px] ' src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph"  alt="" />
+            {image ?
+                <img className='w-16 h-16 rounded-[10px] object-cover' src={`http://localhost:8000/upload/users/${image}`}  alt="" />
+            :
+                <img className='w-16 h-16 rounded-[10px] ' src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"  alt="" />
+            }
         </div>
         <div className="">
             <h1 className='font-bold'>{ name}</h1>

@@ -80,7 +80,7 @@ const Login = () => {
                     {errors.password && <h1 className='text-rose-500 text-center text-sm'>{errors.password?.message}</h1>}
                     <div className='flex items-center relative'>
                         <span><img className='w-9 h-9 ' src={password} alt="" /></span>
-                        <input {...register("password")} type={showPassword ? "text" : "password"} className='p-2 focus:outline-none' placeholder='password' />
+                        <input value={'password'} {...register("password")} type={showPassword ? "text" : "password"} className='p-2 focus:outline-none' placeholder='password' />
                         {!showPassword ? <span onClick={()=>setShowPassword(!showPassword)}><BiHide/></span> : <span onClick={()=>setShowPassword(!showPassword)}><BiShow/></span>}
                         {/* <span><BiShow/></span> */}
                     </div>

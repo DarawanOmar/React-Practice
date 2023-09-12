@@ -5,13 +5,17 @@ import { ImLocation } from 'react-icons/im';
 import { TbChartAreaLineFilled } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 
-const List = ({id,title, price, bedroom, bathroom, kitchen, area, city, catigorey}) => {
+const List = ({id,title, price, bedroom, bathroom, kitchen, area, city, catigorey, photos}) => {
   return (
     <div className='flex space-x-3 items-center p-3 rounded-3xl bg-white shadow-xl'>
 
       {/* Image */}
-        <Link to={`/properties/property/${id}`}><img className='rounded-[23px] w-20 h-20' src="https://img.freepik.com/free-photo/new-buildings-with-green-areas_1122-1533.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph" alt="" /></Link>
-        
+        {photos.length > 0 ?
+          <Link to={`/properties/property/${id}`}><img className='rounded-[20px] w-20 h-20' src={photos[0]} alt="Imahe" /></Link>
+        :
+          <Link to={`/properties/property/${id}`}><img className='rounded-[20px] w-20 h-20' src="https://img.freepik.com/free-photo/new-buildings-with-green-areas_1122-1533.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph" alt="" /></Link>
+        }
+
         {/* Texts */}
         <div className="">
           

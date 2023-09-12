@@ -74,9 +74,10 @@ const PropertyEdit = () => {
       {/* Top Text */}
       <div className="flex items-center pb-6 p-2">
           <Link to='/profile' className='text-xl text-indigo-500'><IoIosArrowBack/></Link>
-          <h1 className='text-xl font-bold mb-1 '><Link to='/profile'> Own Profile</Link></h1>
+          <h1 className='text-xl font-bold'><Link to='/profile'> Own Profile</Link></h1>
       </div>
-    <div className=" bg-neutral-100 rounded-t-3xl w-full px-6 pt-6">
+    <div className=" bg-neutral-100 rounded-t-3xl w-full px-6 pt-3">
+      <h1 className='text-center font-bold text-xl text-indigo-500 mb-5'>Edit Property</h1>
       <form onSubmit={submitForm}>
             {/*  Title*/}
             <h1 className='text-center font-bold'>Title</h1>

@@ -26,9 +26,8 @@ const FavoraiteProperties = () => {
     fetchData()
   },[])
 
-  
   return (
-    <div>
+    <div className='bg-neutral-100 max-w-7xl mx-auto'>
       {/* Top Text & Button Back */}
        <div className="flex justify-between items-center p-2 px-4">
             <div className="flex items-center space-x-2">
@@ -40,11 +39,14 @@ const FavoraiteProperties = () => {
        {propertiesFavoraite.length > 0 &&  <h1 className='text-center mt-4 font-bold text-xl my-3'>This is Your Favoraite Properties....</h1>}
 
       {/* List Properties */}
-      <div className="p-4 mb-10">
+      <div className="p-4 mb-14">
         {propertiesFavoraite.length > 0 ? (<>
-        {propertiesFavoraite.map((pro,index) => {
-          return  <ListPropritesFavoraite key={index} id={pro.id} property={JSON.parse(pro.property)[0]}/>
-        })}</>):
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-3'>
+            {propertiesFavoraite.map((pro,index) => {
+              return  <ListPropritesFavoraite key={index} id={pro.id} property={JSON.parse(pro.property)[0]}/>
+            })}
+          </div>
+        </>):
         (<>
           <div className='flex justify-center items-center h-screen'>
             <h1 className='text-center font-bold'>You Don't Have Favoraite Property Yet</h1>

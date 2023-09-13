@@ -26,9 +26,9 @@ const AddProperty = () => {
     const schema = yup.object().shape({
         title : yup.string().required("Write Your Title").min(3),
         description : yup.string().required("Write Your Discription").min(10,"Please More Than 10 Character").max(200,"please less than 200 character"),
-        price : yup.number().typeError("Number").required("Write your Price").positive("Please enter Positive Number"),
-        area : yup.number().typeError("Number").required("Write your Area").positive("Please enter Positive Number"),
-        address : yup.string().required("Write your Address").min(6,"Atlest Write 6 Character").max(30,"Your Address So Long"),
+        price : yup.number().typeError("$Price").required("Write your Price").positive("Please enter Positive Number"),
+        area : yup.number().typeError("Area").required("Write your Area").positive("Please enter Positive Number"),
+        address : yup.string().required("Write your Address").min(6,"Atlest Write 6 Character").max(50,"Your Address So Long"),
         catigorey_id : yup.number().required("Write your Catigorey"),
         city_id : yup.number().required("Write your City"),
         bedroom: yup.number().nullable().transform((value, originalValue) => originalValue === "" ? null : value).typeError("Number").positive("Positive"),

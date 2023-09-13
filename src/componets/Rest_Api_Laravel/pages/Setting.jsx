@@ -6,6 +6,7 @@ import userimage from '../img/user.png'
 import Password from '../img/password(1).png'
 import logout from '../img/logout.png'
 import shild from '../img/shield.png'
+import chnagename from '../img/chagename.png'
 import axios from 'axios'
 import { useState } from 'react'
 import { useEffect } from 'react'
@@ -42,7 +43,7 @@ const Setting = () => {
         }
       }
 
-  return (
+    return (
     <div>
         {/* Top Back Button */}
          <div className="flex justify-between items-center p-2 px-4">
@@ -56,7 +57,7 @@ const Setting = () => {
         <div className='p-3'>
             <div className="flex justify-between items-center   bg-indigo-50 rounded-2xl p-2">
                 <div className="flex items-center">
-                    {user.photo ?
+                    {user.image ?
                         <span><img className='w-11 h-11 rounded-full object-cover' src={user.photo} alt="user" /></span>
                     :
                         <span><img className='w-11 h-11 ' src={userimage} alt="images" /></span>
@@ -67,12 +68,22 @@ const Setting = () => {
             </div>
         </div>
 
+        {/* Change Name&Email */}
+        <div className='p-3'>
+            <div className="flex justify-between items-center   bg-indigo-50 rounded-2xl p-2">
+                <div className="flex items-center">
+                    <span><img className='w-8 h-8 ' src={chnagename} alt="" /></span>
+                    <h1 className='ml-4 font-bold'><Link to='/changename'>Change Name</Link></h1>
+                </div>
+                 <span className='text-lg pr-6'><Link><SlArrowRight/></Link></span>
+            </div>
+        </div>
         {/* Change Password */}
         <div className='p-3'>
             <div className="flex justify-between items-center   bg-indigo-50 rounded-2xl p-2">
                 <div className="flex items-center">
-                    <span><img className='w-9 h-9 ' src={Password} alt="" /></span>
-                    <h1 className='ml-3 font-bold'><Link to='/changepassword'>Change Password</Link></h1>
+                    <span><img className='w-8 h-8 ' src={Password} alt="" /></span>
+                    <h1 className='ml-4 font-bold'><Link to='/changepassword'>Change Password</Link></h1>
                 </div>
                  <span className='text-lg pr-6'><Link><SlArrowRight/></Link></span>
             </div>

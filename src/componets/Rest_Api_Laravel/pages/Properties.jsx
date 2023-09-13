@@ -10,12 +10,13 @@ import RangeSliderArea from '../components/RangeSliderArea';
 
 
 const MIN_PRICE = 1000;
-const MAX_PRICE = 10000;
+const MAX_PRICE = 100000;
 const MIN_AREA = 100;
-const MAX_AREA = 1000;
+const MAX_AREA = 10000;
 
 const Properties = () => {
-  const [properties, setProperties] = useState([]);
+  const [originalProperties, setOriginalProperties] = useState([]);  
+  const [displayedProperties, setDisplayedProperties] = useState([]);
   const [search, setSearch] = useState('');
   const [loader, setLoader] = useState(true)
   const [filter, setFilter] = useState(false)
@@ -25,7 +26,8 @@ const Properties = () => {
   
   const fetchData = async ()=>{
     const data = await axios.get(`/allproperties`);
-    setProperties(data.data.allProperties);
+    setOriginalProperties(data.data.allProperties)
+    setDisplayedProperties(data.data.allProperties)
   }
   useEffect(()=>{
     fetchData();
@@ -37,24 +39,24 @@ const Properties = () => {
   
   const handleFilter = async () => {
     const response = await axios.get(`http://localhost:8000/api/properties?area[0]=${valuesArea[0]}&area[1]=${valuesArea[1]}&price[0]=${valuesPrice[0]}&price[1]=${valuesPrice[1]}`)
-    setProperties(response.data.properties.data)
+    setDisplayedProperties(response.data.properties.data)
 }
 
 
-
-const searach =  (name) => {
-  const filterCityOrCatigory = properties.filter(cityOrCatigorey =>{
-      return  cityOrCatigorey.catigorey.name.toLowerCase().includes(name.toLowerCase()) || cityOrCatigorey.city.name.toLowerCase().includes(name.toLowerCase())
-  })
-  setProperties(filterCityOrCatigory)
+// Input Search
+const searchProperties =  (name) => {
+  const filtered = originalProperties.filter(property => {
+    return property.catigorey.name.toLowerCase().includes(name.toLowerCase()) || property.city.name.toLowerCase().includes(name.toLowerCase());
+  });
+  setDisplayedProperties(filtered);
 
 }
 
 const handleSearch = (name) => {
-  if (!name) {
-      fetchData();
+  if (name) {
+    searchProperties(name);
   } else {
-      searach(name);
+    setDisplayedProperties(originalProperties)
   }
   setSearch(name);
 }
@@ -111,34 +113,40 @@ const handleSearch = (name) => {
   }
   
   return (
-    <div className='max-w-7xl mx-auto bg-neutral-100  '>
+    <div className='max-w-7xl mx-auto bg-neutral-100  h-screen'>
       <Link to='/home' className="flex items-center space-x-1 p-3">
         <h1  className='text-xl text-indigo-500'><IoIosArrowBack/></h1>
-        <h1 className='text-xl font-bold mb-1 '>Home</h1>
+        <h1 className='text-xl font-bold'>Home</h1>
       </Link>
       {/* Search & Filter */}
       <div className="flex justify-between my-4 md:space-x-6 px-4">
           <div className="flex bg-white items-center rounded-2xl mr-2">
               <span className='text-blue-600  p-2 text-2xl'><FiSearch/></span>
-              <input value={search} onChange={(e) => handleSearch(e.target.value)} className='p-3 bg-white focus:outline-none  rounded-lg  placeholder:text-gray-400 shadow-sm' type="text" placeholder='Search...' />
+              <input value={search} onChange={(e) => handleSearch(e.target.value)} className='p-3 bg-white focus:outline-none  rounded-lg  placeholder:text-gray-400 shadow-sm' type="text" placeholder='City || Catigorey...' />
           </div>
           <div>
               <div className="flex items-center space-x-2 bg-blue-700 rounded-xl px-4 py-[11px] ">
-                  <h1 className='bg-gray-400 rounded-full flex justify-center items-center w-5 h-5 text-blue-700'><BiFilter/></h1>
-                  <h1 className='text-gray-300'><button onClick={filterButton} >Filters</button></h1>
+                  <h1 className='text-indigo-500 rounded-full flex justify-center items-center w-5 h-5 bg-white'><BiFilter/></h1>
+                  <h1 className='text-white'><button onClick={filterButton} >Filters</button></h1>
               </div>
           </div>
       </div>
 
       {/* Filter Price & Area */}
-      <div id='2' className={filter ? 'bg-neutral-200 w-full h-[490px] fixed bottom-14 rounded-t-[40px] p-4  ease-in-out duration-500 z-10' : ' translate-y-72 ease-in-out duration-500'}>
+      <div className={filter ? 'bg-neutral-200 w-full h-[490px] fixed bottom-14 rounded-t-[40px] p-4  ease-in-out duration-500 z-10' : ' translate-y-72 ease-in-out duration-500'}>
             {filter && <>
                 <button className='font-bold text-lg' onClick={filterButton}>x</button>
                 <h1 className='text-center text-2xl font-bold '>Filter</h1>
                 <h1 className='text-xl font-bold mt-5 '>Property Type </h1>
 
                 <div className='mt-10 '>
-                        <h1 className='font-bold text-md'>Property Price</h1>
+                  <div className='flex justify-between items-center '>
+                    <h1 className='font-bold text-md'>Property Price</h1>
+                    </div>
+                    <div className='flex justify-between items-center '>
+                        <h1 className='text-gray-400 text-sm'>Low</h1>
+                        <h1 className='text-gray-400 text-sm mr-4'>High</h1>
+                    </div>
                     <RangeSliderPrice valuesPrice={valuesPrice} setValuesPrice={setValuesPrice} MIN_PRICE= {MIN_PRICE} MAX_PRICE = {MAX_PRICE} />
                 </div>
                 <div className='mt-16'>
@@ -162,12 +170,16 @@ const handleSearch = (name) => {
 
       {/* Propserties */}
       <h1 className='text-xl font-bold ml-4 mb-6'>All Properties</h1>
-      <div id='2' className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 mb-8">
-        {properties.map((property,index) => {
-          return <PropertiesPage key={index} {...property} />
-        })}
+      {displayedProperties.length > 0 ? 
+      <div id='2' className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 pb-16">
+            {displayedProperties.map((property,index) => {
+              return <PropertiesPage key={index} {...property} />
+            })}
+     
       </div>
-      
+      :
+      <h1 className='text-center font-bold text-2xl mt-20'> <span className='text-rose-500'>( {search} )</span> Not Found</h1>
+      }
 
     </div>
   )

@@ -49,7 +49,7 @@ const PropertiesUser = ({id,title, price, bedroom, bathroom, kitchen, area, city
         {/* Title & Price */}
           <div className='flex justify-between items-center'>
             <div className='font-bold text-lg flex items-center space-x-1 capitalize'>
-              <h1>{title.length > 6 ? `${title.slice(0,6)}` : title}</h1>
+              <h1>{title.length > 5 ? `${title.slice(0,5)}` : title}</h1>
               <h1>{catigorey.name}</h1> 
             </div>
             <h1 className='text-blue-700 font-bold text-lg ml-12'>{price}$</h1>

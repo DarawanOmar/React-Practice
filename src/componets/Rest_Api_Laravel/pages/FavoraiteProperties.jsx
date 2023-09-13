@@ -10,7 +10,11 @@ import sad from '../components/sademoji.json'
 
 const FavoraiteProperties = () => {
   const [propertiesFavoraite, setPropertiesFavoraite] = useState([]);
+  const[reload, setReload] = useState(false);
+  const[loader, setLoader] = useState(false);
+
   useEffect(()=>{
+    setLoader(true)
     const fetchData = async () => {
         const response = await axios.get(`http://localhost:8000/api/propertyfavoraite2`,{headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -19,15 +23,64 @@ const FavoraiteProperties = () => {
       }})
       if(response){
         setPropertiesFavoraite(response.data.data)
+        setLoader(false)
       }else{
         console.log("No Data Back");
+        setLoader(false)
       }
     }
     fetchData()
-  },[])
+  },[reload])
+
+  if(loader) {
+    return (
+      <>
+      <div className="flex justify-between items-center p-2 px-4">
+        <div className="flex items-center space-x-2">
+          <Link to='/home' className='text-xl text-indigo-500'><IoIosArrowBack/></Link>
+          <h1 className='text-xl font-bold '><Link to='/home'>Favoraite Properties </Link></h1>
+        </div>
+      </div>
+
+      <h1 className='text-center mt-4 font-bold text-xl my-3'>This is Your Favoraite Properties....</h1>
+
+      <div className='flex flex-col'>
+        <div className="lex flex-col space-y-3 p-8 pb-14">
+              <p className='rounded-[40px] w-full h-[140px] bg-gray-300 animate-pulse'></p>
+              <div className='flex justify-between items-center px-4'>
+                <p className='bg-gray-300 rounded-md h-6 w-32 animate-pulse'></p>
+                <p className='bg-gray-300 rounded-md h-6 w-10 animate-pulse'></p>
+              </div>
+              <p className='bg-gray-300 h-6 rounded-md w-52 mt-2 animate-pulse ml-4'> </p>
+              <div className="flex space-x-4 px-2 mt-2 ml-4">
+                <div className='bg-gray-300 h-5 rounded-md w-8 animate-pulse'></div>
+                <div className='bg-gray-300 h-5 rounded-md w-8 animate-pulse'></div>
+                <div className='bg-gray-300 h-5 rounded-md w-8 animate-pulse'></div>
+                <div className='bg-gray-300 h-5 rounded-md w-8 animate-pulse'></div>
+              </div>
+        </div>
+        <div className="lex flex-col space-y-3 p-8 pb-14">
+              <p className='rounded-[40px] w-full h-[140px] bg-gray-300 animate-pulse'></p>
+              <div className='flex justify-between items-center px-4'>
+                <p className='bg-gray-300 rounded-md h-6 w-32 animate-pulse'></p>
+                <p className='bg-gray-300 rounded-md h-6 w-10 animate-pulse'></p>
+              </div>
+              <p className='bg-gray-300 h-6 rounded-md w-52 mt-2 animate-pulse ml-4'> </p>
+              <div className="flex space-x-4 px-2 mt-2 ml-4">
+                <div className='bg-gray-300 h-5 rounded-md w-8 animate-pulse'></div>
+                <div className='bg-gray-300 h-5 rounded-md w-8 animate-pulse'></div>
+                <div className='bg-gray-300 h-5 rounded-md w-8 animate-pulse'></div>
+                <div className='bg-gray-300 h-5 rounded-md w-8 animate-pulse'></div>
+              </div>
+        </div>
+      </div>
+
+        </>
+    )
+  }
 
   return (
-    <div className='bg-neutral-100 max-w-7xl mx-auto'>
+    <div className='bg-neutral-100 max-w-7xl mx-auto h-screen'>
       {/* Top Text & Button Back */}
        <div className="flex justify-between items-center p-2 px-4">
             <div className="flex items-center space-x-2">
@@ -39,11 +92,11 @@ const FavoraiteProperties = () => {
        {propertiesFavoraite.length > 0 &&  <h1 className='text-center mt-4 font-bold text-xl my-3'>This is Your Favoraite Properties....</h1>}
 
       {/* List Properties */}
-      <div className="p-4 mb-14">
+      <div className="p-4 pb-14">
         {propertiesFavoraite.length > 0 ? (<>
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-3'>
             {propertiesFavoraite.map((pro,index) => {
-              return  <ListPropritesFavoraite key={index} id={pro.id} property={JSON.parse(pro.property)[0]}/>
+              return  <ListPropritesFavoraite key={index} property={JSON.parse(pro.property)[0]} setReload={setReload}  />
             })}
           </div>
         </>):

@@ -2,6 +2,7 @@ import React from 'react'
 import user from '../img/user.png'
 import passwordImg from '../img/password.png'
 import emailImg from '../img/mail.png'
+import phone from '../img/phone.png'
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
@@ -23,6 +24,7 @@ const Register = () => {
         name : yup.string().required("Write Your Name").min(3),
         email : yup.string().email("Please Enter Vaid Email").required("Write Your Email"),
         password : yup.string().required("Write your Pasword").min(6,"Atlest Write 6 Character").max(16,"Your Password So Long"),
+        phone_number : yup.number().typeError("Write your Phone Number").required("Write your Phone Number").positive("Please enter Positive Number").min(11,"Your Digit is lower"),
     })
 
     const {formState:{errors} ,handleSubmit, register, reset} = useForm({
@@ -33,7 +35,7 @@ const Register = () => {
         try {
             setLoader(true)
             const response = await axios.post('http://localhost:8000/api/register',data,{headers: {'Accept': 'application/json','Content-Type': 'application/json'}})
-            if(response){
+            if(response.data){
                 setShowModel(true)
                 setLoader(false)
                 reset()
@@ -65,22 +67,36 @@ const Register = () => {
             {error.length > 0 ? <h1 ref={errorRef} className='text-center bg-rose-500 rounded-xl p-2 my-2 text-white'>{error[0]}</h1> : null}
             <form onSubmit={handleSubmit(submitForm)}>
                 {/* user */}
+                <div className=' border-b-2 bg-white rounded-2xl p-2 '>
                 {errors.name && <h1 className='text-rose-500 text-md text-center'>{errors.name?.message}</h1>}
-                <div className='flex items-center border-b-2 bg-white rounded-2xl p-2 '>
-                    <span><img className='w-9 h-9 ' src={user} alt="" /></span>
-                    <input {...register("name")} type="text" className='p-2 focus:outline-none' placeholder='username' />
+                    <div className='flex items-center'>
+                        <span><img className='w-9 h-9 ' src={user} alt="" /></span>
+                        <input {...register("name")} type="text" className='p-2 focus:outline-none' placeholder='username' />
+                    </div>
                 </div>
                 {/* email */}
+                <div className=' border-b-2 bg-white rounded-2xl p-2 my-3'>
                 {errors.email && <h1 className='text-rose-500 text-md text-center'>{errors.email?.message}</h1>}
-                <div className='flex items-center border-b-2 bg-white rounded-2xl p-2 my-3'>
-                    <span><img className='w-9 h-9 ' src={emailImg} alt="" /></span>
-                    <input {...register("email")} type="email" className='p-2 focus:outline-none' placeholder='Email' />
+                    <div className='flex items-center'>
+                        <span><img className='w-9 h-9 ' src={emailImg} alt="" /></span>
+                        <input {...register("email")} type="email" className='p-2 focus:outline-none' placeholder='Email' />
+                    </div>
+                </div>
+                {/* phone_number */}
+                <div className=' border-b-2 bg-white rounded-2xl p-2 my-3'>
+                {errors.phone_number && <h1 className='text-rose-500 text-md text-center'>{errors.phone_number?.message}</h1>}
+                    <div className='flex items-center'>
+                        <span><img className='w-9 h-9 ' src={phone} alt="" /></span>
+                        <input {...register("phone_number")} type="text" className='p-2 focus:outline-none' placeholder='Phone_Number' />
+                    </div>
                 </div>
                 {/* pasword */}
+                <div className=' bg-white rounded-2xl p-2 '>
                 {errors.password && <h1 className='text-rose-500 text-md text-center'>{errors.password?.message}</h1>}
-                <div className='flex items-center bg-white rounded-2xl p-2 '>
-                    <span><img className='w-9 h-9 ' src={passwordImg} alt="" /></span>
-                    <input {...register("password")} type="password" className='p-2 focus:outline-none' placeholder='password' />
+                    <div className='flex items-center'>
+                        <span><img className='w-9 h-9 ' src={passwordImg} alt="" /></span>
+                        <input {...register("password")} type="password" className='p-2 focus:outline-none' placeholder='password' />
+                    </div>
                 </div>
                 {/* register Button */}
                 <div className='text-center mt-10 pb-[132px]'>

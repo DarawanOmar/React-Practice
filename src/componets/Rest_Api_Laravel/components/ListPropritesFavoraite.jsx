@@ -1,16 +1,34 @@
+import axios from 'axios';
 import React from 'react';
 import { FaBath, FaBed } from 'react-icons/fa';
 import { GiCampCookingPot } from 'react-icons/gi';
 import { ImLocation } from 'react-icons/im';
+import { MdBookmarkAdded } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
-const ListPropritesFavoraite = ({ property, id }) => {
+const ListPropritesFavoraite = ({ property , setReload}) => {
+
+  
+  const removePropertyToFavorairte = async() => {
+    const response = await axios.post(`http://localhost:8000/api/createtablefavoraite`,{ property_id:property.id, addtofavoraite:"false"},{headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }})
+    if(response){
+        console.log("Data Add SuccessFully");
+        setReload(prev=>!prev)
+    }else{
+        console.log("Faild Add");
+    }
+
+}
 
   return (
     <div className='bg-white rounded-[30px] overflow-visible w-full '>
-    <div className="flex flex-col space-y-3 p-3">
+    <div className="relative flex flex-col space-y-3 p-3">
         {/* Image */}
-        <Link to={`/properties/property/${id}`}>
+        <Link to={`/properties/property/${property.id}`}>
           {property.photos.length > 0 ?
             <img className='rounded-[40px] w-full max-h-[160px] object-cover' src={property.photos} alt="" />
           :
@@ -19,11 +37,11 @@ const ListPropritesFavoraite = ({ property, id }) => {
         </Link>
         {/* name & Price */}
         <div className='flex justify-between items-center py-2'>
-          <div className='font-bold text-xl flex items-center space-x-2 capitalize'>
-            <h1>{property.title}</h1>
-            <h1>{property.catigorey.name}</h1> 
+        <button onClick={removePropertyToFavorairte} className='absolute top-1 right-3 text-2xl rounded-full text-indigo-500 bg-white'><MdBookmarkAdded/></button>
+          <div className='font-bold text-lg flex items-center space-x-2 capitalize'>
+            <h1>{property.title.length > 15 ? `${property.title.slice(0,15)}..` : property.title}</h1>
           </div>
-          <h1 className='text-blue-700 font-bold text-xl'>{property.price}$</h1>
+          <h1 className='text-blue-700 font-bold text-lg'>{property.price}$</h1>
         </div>
         {/* Location & area */}
         <div className="flex justify-between items-center text-gray-400">

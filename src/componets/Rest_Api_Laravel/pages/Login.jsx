@@ -59,7 +59,7 @@ const Login = () => {
             <img className='w-10 h-10' src={apartment} alt="" />
             <h1 className='text-center font-bold text-3xl text-white '>Real Estate</h1>
         </div>
-        <div className="bg-neutral-200 rounded-t-[60px] py-10 p-10 ">
+        <div className="bg-neutral-200 rounded-t-[60px] pb-[100px] p-10 ">
 
             <div className="pb-10">
                 <h1 className='text-center font-bold text-2xl '>Login</h1>
@@ -80,13 +80,15 @@ const Login = () => {
                     {errors.password && <h1 className='text-rose-500 text-center text-sm'>{errors.password?.message}</h1>}
                     <div className='flex items-center relative'>
                         <span><img className='w-9 h-9 ' src={password} alt="" /></span>
-                        <input value={'password'} {...register("password")} type={showPassword ? "text" : "password"} className='p-2 focus:outline-none' placeholder='password' />
+                        <input  {...register("password")} type={showPassword ? "text" : "password"} className='p-2 focus:outline-none' placeholder='password' />
                         {!showPassword ? <span onClick={()=>setShowPassword(!showPassword)}><BiHide/></span> : <span onClick={()=>setShowPassword(!showPassword)}><BiShow/></span>}
                         {/* <span><BiShow/></span> */}
                     </div>
                 </div>
                 <div className="flex justify-between items-center pb-3">
-                    <Link to='/forgotpassword' className='text-gray-500'>Forget Password</Link>
+                    <Link 
+                    to='/forgotpassword'
+                     className='text-gray-500'>Forget Password</Link>
                     <button type='submit' className='bg-blue-600 text-white px-10 py-3 rounded-xl'>Login</button>
                 </div>
             </form>

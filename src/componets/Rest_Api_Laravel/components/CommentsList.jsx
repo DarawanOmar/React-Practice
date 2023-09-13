@@ -7,7 +7,11 @@ const CommentsList = ({user,comments}) => {
     <div className='bg-gradient-to-r from-indigo-50  via-indigo-200  to-indigo-50  rounded-md p-4 shadow-xl'>
        
         <div className="flex py-4 items-center space-x-2 text-xs">
-            <img className='w-10 h-10 rounded-[30px] ' src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph"  alt="" />
+          {user.image ? 
+            <img className='w-10 h-10 rounded-[30px] object-cover' src={user.photo}  alt="" />
+          :
+            <img className='w-10 h-10 rounded-full object-cover' src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"  alt="userKnown" />
+          }
             <div className="">
                 <h1 className='font-bold'>{user.name}</h1>
                 <h1>{user.email}</h1>

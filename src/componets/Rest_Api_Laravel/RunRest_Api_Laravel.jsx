@@ -1,6 +1,6 @@
 import React from 'react'
 import App from './pages/App'
-import {Routes,Route} from 'react-router-dom'
+import {Routes,Route, useLocation} from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Properties from './pages/Properties'
 import Intro01 from './pages/Intro01'
@@ -21,11 +21,18 @@ import PropertyEdit from './pages/PropertyEdit'
 import FavoraiteProperties from './pages/FavoraiteProperties'
 import ChangePassword from './pages/ChangePassword'
 import PrivicyAndPoliciy from './pages/PrivicyAndPoliciy'
+import ChangeName from './pages/ChangeName'
 
 const RunRestApiLaravel = () => {
+  const location = useLocation();
+
+  // An array of paths where you don't want to show the Navbar
+  const pathsWithoutNavbar = ['/', '/intro02', '/login'];
+
   return (
     <div className='font-realEstate2'>
-      <Navbar/>
+      {/* Conditionally render Navbar */}
+      {!pathsWithoutNavbar.includes(location.pathname) && <Navbar />}
       <Routes>
         <Route path='/'>
             <Route path='/home' element={<App/>}/>
@@ -48,10 +55,11 @@ const RunRestApiLaravel = () => {
         <Route path='/searchproperty/:city_id' element={<SearchPrtoperty/>}/>
         <Route path='/profile/editproperty/:id' element={<PropertyEdit/>}/>
         <Route path='/changepassword' element={<ChangePassword/>}/>
+        <Route path='/changename' element={<ChangeName/>}/>
         <Route path='/privicyandpoliciy' element={<PrivicyAndPoliciy/>}/>
       </Routes>
     </div>
-  )
+  );
 }
 
-export default RunRestApiLaravel
+export default RunRestApiLaravel;

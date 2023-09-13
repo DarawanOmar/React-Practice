@@ -5,12 +5,13 @@ import { ImLocation } from 'react-icons/im'
 import { TbChartAreaLineFilled } from 'react-icons/tb'
 import { MdDelete } from 'react-icons/md'
 import { RiEdit2Fill } from 'react-icons/ri'
+import { GiHomeGarage } from 'react-icons/gi'
 import { Link } from 'react-router-dom'
 import Tests from '../pages/Tests'
 import ModelDeleteProperty from './ModelDeleteProperty'
 
 
-const PropertiesUserProfile = ({id,title, price, bedroom, bathroom, kitchen, area, city, catigorey,photos ,loader, deletePropery, setId}) => {
+const PropertiesUserProfile = ({id,title, price, bedroom, bathroom, kitchen, area, city, catigorey,photos, garage ,loader, deletePropery, setId, setReload, showNotifiDelete}) => {
 
   const [showModel, setShowModel] = useState(false)
 
@@ -18,13 +19,13 @@ const PropertiesUserProfile = ({id,title, price, bedroom, bathroom, kitchen, are
     return <Tests/>
   }
   return (
-    <div className='flex justify-between rounded-3xl bg-white'>
+    <div className='flex justify-between rounded-3xl bg-white '>
 
       {/* Image */}
       {photos.length > 0 ?
-        <Link to={`/properties/property/${id}`}><img className='rounded-[20px] w-20 h-20' src={photos[0]} alt="Imahe" /></Link>
+        <Link to={`/properties/property/${id}`}><img className='rounded-[20px] w-20 h-20 object-cover' src={photos[0]} alt="Imahe" /></Link>
        :
-        <Link to={`/properties/property/${id}`}><img className='rounded-[20px] w-20 h-20' src="https://img.freepik.com/free-photo/new-buildings-with-green-areas_1122-1533.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph" alt="" /></Link>
+        <Link to={`/properties/property/${id}`}><img className='rounded-[20px] w-20 h-20 object-cover' src="https://img.freepik.com/free-photo/new-buildings-with-green-areas_1122-1533.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph" alt="" /></Link>
         }
         
         {/* Texts */}
@@ -48,16 +49,17 @@ const PropertiesUserProfile = ({id,title, price, bedroom, bathroom, kitchen, are
             {/* Bed & Bath & Area & Kitchen */}
             <div className="flex space-x-2 px-2">
               <div className='text-gray-400 text-sm  flex items-center space-x-1'><span className='text-orange-600'><TbChartAreaLineFilled /></span> <h1 className='flex space-x-2'>{area}</h1>  </div>
-              <div className='text-gray-400 text-sm  flex items-center space-x-1'><span className='text-orange-600'><FaBed /></span> <h1 className='flex space-x-2'>{bedroom}</h1> </div>
-              <div className='text-gray-400 text-sm  flex items-center space-x-1'><span className='text-orange-600'><FaBath /></span> <h1>{bathroom}</h1> </div>
-              <div className='text-gray-400 text-sm  flex items-center space-x-1'><span className='text-orange-600'><GiCampCookingPot /></span><h1> {kitchen}</h1></div>
+              <div className='text-gray-400 text-sm  flex items-center space-x-1'>{bedroom > 0 && <> <span className='text-orange-600'><FaBed /></span>} <h1 className='flex space-x-2'>{bedroom}</h1></>} </div>
+              <div className='text-gray-400 text-sm  flex items-center space-x-1'>{bathroom > 0 && <> <span className='text-orange-600'><FaBath /></span>} <h1>{bathroom}</h1></>} </div>
+              <div className='text-gray-400 text-sm  flex items-center space-x-1'>{kitchen > 0 && <> <span className='text-orange-600'><GiCampCookingPot /></span>}<h1> {kitchen}</h1></>}</div>
+              <div className='text-gray-400 text-sm  flex items-center space-x-1'>{garage > 0  && <> <span className='text-orange-600'><GiHomeGarage /></span><h1> {garage}</h1> </>}</div>
             </div>
         </div>
         <div className="flex">
           <Link ><button onClick={() => setShowModel(prev => !prev)}><MdDelete/></button></Link>
           <Link to={`/profile/editproperty/${id}`} ><RiEdit2Fill/></Link>
         </div>
-        {showModel && <ModelDeleteProperty setShowModel={setShowModel} id={id} deletePropery={deletePropery} setId={setId}/>}
+        {showModel && <ModelDeleteProperty setShowModel={setShowModel} id={id} deletePropery={deletePropery} setId={setId} setReload={setReload} showNotifiDelete={showNotifiDelete}/>}
         
     </div>
   )

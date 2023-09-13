@@ -2,6 +2,7 @@ import React from 'react'
 import { FaBath, FaBed } from 'react-icons/fa'
 import { GiCampCookingPot } from 'react-icons/gi'
 import { ImLocation } from 'react-icons/im'
+import { TbChartAreaLineFilled } from 'react-icons/tb'
 import { Link } from 'react-router-dom'
 
 const PropertySliderList = ({id, title, price, bedroom, bathroom, kitchen, area, city, catigorey,photos, loader}) => {
@@ -36,8 +37,8 @@ const PropertySliderList = ({id, title, price, bedroom, bathroom, kitchen, area,
         {/* name & Price */}
         <div className='flex justify-between items-center'>
           <div className='font-bold text-lg flex items-center space-x-2 capitalize'>
-            <h1>{title}</h1>
-            <h1>{catigorey.name}</h1> 
+            <h1>{title.length > 15 ? `${title.slice(0,15)}...` : title}</h1>
+            {/* <h1>{catigorey.name}</h1>  */}
           </div>
           <h1 className='text-blue-700 font-bold text-lg'>{price}$</h1>
         </div>
@@ -50,9 +51,10 @@ const PropertySliderList = ({id, title, price, bedroom, bathroom, kitchen, area,
         </div>
         {/* Bed & Bath & kitchen */}
         <div className="flex space-x-2">
-          <div className='text-gray-400 text-sm  flex items-center space-x-1'><span className='text-orange-600'><FaBed /></span> <h1 className='flex space-x-2'>{bedroom}</h1> <span>Bed</span> </div>
-          <div className='text-gray-400 text-sm  flex items-center space-x-1'><span className='text-orange-600'><FaBath /></span> <h1>{bathroom}</h1><span>Bath</span> </div>
-          <div className='text-gray-400 text-sm  flex items-center space-x-1'><span className='text-orange-600'><GiCampCookingPot /></span><h1> {kitchen}</h1> <span>Kitchen</span></div>
+        <div className='text-gray-400 text-sm  flex items-center space-x-1'><span className='text-orange-600'><TbChartAreaLineFilled /></span> <h1 className='flex space-x-2'>{area}</h1>  </div>
+              <div className='text-gray-400 text-sm  flex items-center space-x-1'>{bedroom && <span className='text-orange-600'><FaBed /></span>} <h1 className='flex space-x-2'>{bedroom}</h1> </div>
+              <div className='text-gray-400 text-sm  flex items-center space-x-1'>{bathroom && <span className='text-orange-600'><FaBath /></span>} <h1>{bathroom}</h1> </div>
+              <div className='text-gray-400 text-sm  flex items-center space-x-1'>{kitchen && <span className='text-orange-600'><GiCampCookingPot /></span>}<h1> {kitchen}</h1></div>
         </div>
     </div>
 </div>

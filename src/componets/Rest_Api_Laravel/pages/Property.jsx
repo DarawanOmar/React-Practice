@@ -12,7 +12,7 @@ import Tests from '../pages/Tests'
 const Property = () => {
 
     const {id} = useParams();
-    const [addPropertyFavoraite, setAddPropertyFavoraite] = useState(false);
+    const [check, setCheck] = useState([]);
     const [property, setProperty] = useState([]);
     const [comments, setComments] = useState([]);
     const [textComment, setTextComment] = useState('');
@@ -27,8 +27,14 @@ const Property = () => {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }});
-            if (data && comments) {
+            const checkadded = await axios.get(`http://localhost:8000/api/checkadded/${id}`,{headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }});
+            if (data && comments && checkadded) {
                 setComments(comments.data.data)
+                setCheck(checkadded.data.data)
                 setProperty([data.data.property]);
                 setLoader(false)
             }else{
@@ -38,15 +44,28 @@ const Property = () => {
         fetchData();
     },[reload])
 
-    const addPropertyToFavorairteAndComment = async() => {
-        const response = await axios.post(`http://localhost:8000/api/createtablefavoraite`,{ property_id:id, addtofavoraite:"true", comment:textComment },{headers: {
+
+    const addPropertyToFavorairte = async() => {
+        const response = await axios.post(`http://localhost:8000/api/createtablefavoraite`,{ property_id:id, addtofavoraite:"true"},{headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }})
         if(response){
             console.log("Data Add SuccessFully");
-            setAddPropertyFavoraite(true)
+        }else{
+            console.log("Faild Add");
+        }
+    }
+    const addCommentToProperty = async() => {
+        const response = await axios.post(`http://localhost:8000/api/favoraiteaddcomment`,{ property_id:id, comment:textComment},{headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }})
+        if(response){
+            console.log("Data Add SuccessFully");
+            setTextComment('')
         }else{
             console.log("Faild Add");
         }
@@ -84,36 +103,37 @@ const Property = () => {
         )
       }
 
+      
   return (
     <div className='max-w-7xl mx-auto bg-neutral-100'>
 
         {/* Top Arrow Back & BookMark */}
         <div className="flex justify-between items-center p-2 px-4">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-3 p-1">
                 <Link to='/home' className='text-xl text-indigo-500'><IoIosArrowBack/></Link>
-                <h1 className='text-xl font-bold mb-1 '>Property Details</h1>
+                <h1 className='text-xl font-bold '>Property Details</h1>
             </div>
-            <div className="p-2 bg-indigo-50 rounded-lg">
-                {/* <span className='text-indigo-600 text-xl'><button onClick={addPropertyToFavorairteAndComment}>{addPropertyFavoraite ? <MdBookmarkAdded/> : <MdBookmarkAdd/>}</button></span> */}
-        {comments.length > 0 ? 
-             <span className='text-indigo-600 text-xl'>
-                {comments[0].isfavoraite === "true" ? 
-                    <button>{ <MdBookmarkAdded/>}</button>
-                :
-                    <button onClick={() => {
-                        addPropertyToFavorairteAndComment()
+            {/* BookMark Icon */}
+            {check.length > 0 ?
+                <span className='text-indigo-600 text-xl'>
+                    {check[0].isfavoraite === "true" ? 
+                    <button>{ <MdBookmarkAdded/>}</button> 
+                    : <button onClick={() => {
+                        addPropertyToFavorairte()
                         setReload(prev=>!prev)
-                    }}>{ <MdBookmarkAdd/>}</button>
-                }
-             </span>
-             : 
-             <span className='text-indigo-600 text-xl'><button onClick={() => {
-                addPropertyToFavorairteAndComment()
-                setReload(prev=>!prev)
-            }}>{ <MdBookmarkAdd/>}</button></span>
-             }
-            </div>
+                    }}>{ <MdBookmarkAdd/>}</button>}
+                </span>
+                :
+                <span className='text-indigo-600 text-xl'> 
+                <button onClick={() => {
+                    addPropertyToFavorairte()
+                    setReload(prev=>!prev)
+                    }}>{ <MdBookmarkAdd/>}
+                </button>
+                </span>
+            }
         </div>
+
         {/* Property */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 mt-7">
             {property.map(item => {
@@ -123,11 +143,11 @@ const Property = () => {
         
         <hr className='my-2 h-[1px] bg-black mx-auto w-1/2' />
         {/* Add Comment */}
-        <div className="flex flex-col justify-center items-center mb-24 px-4">
-            <h1 className='text-center font-bold'>You you can write your opinion about this proaperty</h1>
-            <textarea onChange={(e)=>setTextComment(e.target.value)} type="text" className='p-2 text-center rounded-md w-full bg-gradient-to-r from-indigo-50  via-indigo-200  to-indigo-50 focus:outline-none placeholder:text-center' placeholder='Comment...'/>
+        <div className="flex flex-col justify-center items-center mb-24 ">
+            <h1 className='text-center font-bold mb-2'>You Can Write Your Opinion About This Proaperty</h1>
+            <textarea onChange={(e)=>setTextComment(e.target.value)} value={textComment} type="text" className='p-2 text-center rounded-md w-full bg-gradient-to-r from-indigo-50  via-indigo-200  to-indigo-50 focus:outline-none placeholder:text-center' placeholder='Comment...'/>
             <button onClick={() => {
-                addPropertyToFavorairteAndComment()
+                addCommentToProperty()
                 setReload(prev=>!prev)
                 }} className='bg-gradient-to-b from-indigo-500  via-indigo-700  to-indigo-500 px-6 py-2 mt-3 rounded-md text-white'>Post Comment</button>
         </div>

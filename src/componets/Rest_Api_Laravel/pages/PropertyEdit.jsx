@@ -18,7 +18,9 @@ const PropertyEdit = () => {
   const [area, setarea] = useState('')
   const [address, setaddress] = useState('')
   const [city, setcity] = useState('')
+  const [cityShow, setCityShow] = useState('')
   const [catigore, setCatigore] = useState('')
+  const [catigoreShow, setCatigoreShow] = useState('')
   const [bedroom, setBedroom] = useState('')
   const [bathroom, setBathroom] = useState('')
   const [kitchen, setKitchen] = useState('')
@@ -38,14 +40,17 @@ const PropertyEdit = () => {
         setprice(fetchPro?.price);
         setarea(fetchPro?.area);
         setaddress(fetchPro?.address)
-        setcity(fetchPro?.city)
-        setCatigore(fetchPro?.catigorey)
+        setcity(fetchPro?.city_id)
+        setCatigore(fetchPro?.catigorey_id)
         setCatigorey(responseCatigoery.data)
         setCities(responseCities.data)
-        setBedroom(fetchPro?.bedroom)
-        setBathroom(fetchPro?.bathroom)
-        setGarage(fetchPro?.kitchen)
-        setKitchen(fetchPro?.garage)
+        setCityShow(fetchPro?.city)
+        setCatigoreShow(fetchPro?.catigorey)
+        setBedroom(fetchPro?.bedroom || '');
+        setBathroom(fetchPro?.bathroom || '');
+        setGarage(fetchPro?.kitchen || '');
+        setKitchen(fetchPro?.garage || '');
+        
       }else {
         console.log("No Response!");
       }     
@@ -55,7 +60,9 @@ const PropertyEdit = () => {
 
   const submitForm = async (e) => {
     e.preventDefault();
-    const update = await axios2.put(`http://localhost:8000/api/profile/updateproperties/${id}`,{ city_id:city.id , catigorey_id:catigore.id, title:title, address:address ,area:area ,price:price, description:disc },{headers: {
+    const update = await axios2.put(`http://localhost:8000/api/profile/updateproperties/${id}`,
+    { city_id:city , catigorey_id:catigore, title:title, address:address ,area:area ,price:price, description:disc, bedroom:bedroom, bathroom:bathroom, garage:garage, kitchen:kitchen  },
+    {headers: {
       'Authorization': `Bearer ${localStorage.getItem('token')}`,
       'Accept': 'application/json',
       'Content-Type': 'application/json'
@@ -68,6 +75,7 @@ const PropertyEdit = () => {
       console.log(update.response.data.Errors[0]);
     }
   }
+
 
   return (
     <div className=" ">
@@ -84,14 +92,14 @@ const PropertyEdit = () => {
             <input  onChange={(e) => settitle(e.target.value)} value={title} type="text" className='p-2 text-center  w-full rounded-xl  mb-2 focus:outline-none ' placeholder='Title' />
 
             {/* Discripton */}
-            <h1 className='text-center'>title</h1>
+            <h1 className='text-center font-bold'>Discription</h1>
             <textarea value={disc} onChange={(e) => setdisc(e.target.value)} cols="30" rows="2"  className='p-2 text-center  w-full rounded-xl focus:outline-none ' placeholder='Discription' />
 
             {/* Area & Price */}
             <div className='flex items-center space-x-2'>
                 {/* Price */}
                     <div className='flex flex-col items-center'>
-                      <h1 className='text-center font-bold'>Discription</h1>
+                      <h1 className='text-center font-bold'>Price</h1>
                       <input value={price} onChange={(e) => setprice(e.target.value)}  type="number" className='p-3 w-full  text-center focus:outline-none  rounded-xl  ' placeholder='Price' />
                     </div>
                 {/*  Area*/}
@@ -103,25 +111,29 @@ const PropertyEdit = () => {
 
             {/* City & Categorey */}
             <div className="flex justify-between items-center space-x-[1px] rounded-2xl p-2">
-            <div className='flex flex-col items-center'>
-            <h1 className='text-center font-bold'>Catigorey</h1>
-                <select name="a"  id="dd" value={catigore.id}  onChange={(e) => setCatigore(e.target.value)} className='focus:outline-none p-2 rounded-md'>
-                    <option>{catigore.name}</option>
+
+              <div className='flex flex-col items-center'>
+                <h1 className='text-center font-bold'>Catigorey</h1>
+                <select 
+                  onChange={(e) => setCatigore(e.target.value)}
+                  className='focus:outline-none p-2 rounded-md'>
+                    <option value={catigore}>{catigoreShow?.name}</option>
                     {Catigorey.map(catigorey => {
                         return <option key={catigorey.id} value={catigorey.id}>{catigorey.name}</option>
                     })}
                 </select>
-                </div>
-                <div className='flex flex-col items-center'>
-            <h1 className='text-center font-bold'>City</h1>
-                <select name="d"  id="aaa"  value={city.id} onChange={(e) => setcity(e.target.value)} className='focus:outline-none p-2 rounded-md'>
-                    <option>{city.name}</option>
+              </div>
+              <div className='flex flex-col items-center'>
+                <h1 className='text-center font-bold'>City</h1>
+                <select 
+                onChange={(e) => setcity(e.target.value)}
+                  className='focus:outline-none p-2 rounded-md'>
+                    <option value={city}>{cityShow?.name}</option>
                     {cities.map(city => {
                         return <option key={city.id} value={city.id}>{city.name}</option>
                     })}
                 </select>
-                </div>
-               
+              </div>
             </div>
             
             {/*  Beth Bath Kitchen Garage*/}
@@ -130,13 +142,13 @@ const PropertyEdit = () => {
                 <span className='text-2xl ' onClick={()=>setShowAddRoom(prev => !prev)}><MdOutlinePlaylistAdd/></span>
             </div>
             <div className={showAddRoom ? " flex justify-between items-center space-x-2 duration-700 ease-in-out" : "-translate-x-[1000px] duration-700 ease-in-out"}>
-                {showAddRoom && (<>
+                {showAddRoom ? (<>
                     <div className="flex flex-col items-center">
                       <h1 className='text-center font-bold'>Bedroom</h1>
                       <input value={bedroom} onChange={(e)=>setBedroom(e.target.value)} type="number" className='text-center focus:outline-none rounded-md py-2 w-full  placeholder:text-center' placeholder='Bed' />
                     </div>
                     <div className="flex flex-col items-center">
-                      <h1 className='text-center font-bold'>Bedroom</h1>
+                      <h1 className='text-center font-bold'>Bathroom</h1>
                       <input value={bathroom} onChange={(e)=>setBathroom(e.target.value)} type="number" className='text-center focus:outline-none rounded-md py-2 w-full  placeholder:text-center' placeholder='Bath' />
                     </div>
                     <div className="flex flex-col items-center">
@@ -147,7 +159,7 @@ const PropertyEdit = () => {
                       <h1 className='text-center font-bold'>Garage</h1>
                       <input value={garage} onChange={(e)=>setGarage(e.target.value)} type="number" className=' text-center focus:outline-none rounded-md py-2 w-full  placeholder:text-center' placeholder='Garage' />
                     </div>
-                </>)}
+                </>) : null}
             </div>
 
 

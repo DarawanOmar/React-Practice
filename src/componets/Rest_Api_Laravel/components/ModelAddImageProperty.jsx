@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import imageUpload from '../components/upload File.json';
 import Lottie from 'lottie-react';
+import { useNavigate } from 'react-router-dom';
 
 const ModelAddImageProperty = ({ idProperty, setShowModel }) => {
     const [image, setImage] = useState(null);
+    const navigate = useNavigate()
+
 
     const handleImageChange = (event) => {
         setImage(event.target.files[0]);
@@ -25,6 +28,7 @@ const ModelAddImageProperty = ({ idProperty, setShowModel }) => {
 
             if (!response.data.errors) {
               setShowModel(false)
+              navigate('/home')
             } else{
                 console.log("Faild Upload");
             }

@@ -31,6 +31,7 @@ const ProfileUsers = () => {
         }
         fetchProperties();
     },[])
+
    
   return (
     <div>
@@ -68,7 +69,7 @@ const ProfileUsers = () => {
                 </div>
                 {/* Name & Bio */}
                 <h1 className='text-center mt-10 font-bold text-xl'>{user.name}</h1>
-                <div className='text-center mt-3'>
+                <div className='text-center mt-3 p-2'>
                     {user.bio ? <h1>{user.bio}</h1> : null}
                 </div>
                 <hr  className='w-1/2 mx-auto bg-black my-4'/>

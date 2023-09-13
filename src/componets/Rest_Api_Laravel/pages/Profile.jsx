@@ -27,34 +27,34 @@ const Profile = () => {
     const [id, setId] = useState(null)
 
     useEffect(()=>{
-    setTimeout(() => {
-        setLoader(false)
-    }, 1500);
-    const fettchDataUser = async () =>{
-        try {
-            const data = await axios.get('http://localhost:8000/api/profile/properties', {headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }});
-            const user = await axios.get('http://localhost:8000/api/profile', {headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }});
-            if(user && data){
-                setUser(user.data)
-                setPropertiesUser(data.data.Properties.data)
-            }else{
-                console.log("have an issue");
-            }
-
-        } catch (error) {
-            console.log(error);
+        setTimeout(() => {
             setLoader(false)
+        }, 1500);
+        const fettchDataUser = async () =>{
+            try {
+                const data = await axios.get('http://localhost:8000/api/profile/properties', {headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }});
+                const user = await axios.get('http://localhost:8000/api/profile', {headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }});
+                if(user && data){
+                    setUser(user.data)
+                    setPropertiesUser(data.data.Properties.data)
+                }else{
+                    console.log("have an issue");
+                }
+
+            } catch (error) {
+                console.log(error);
+                setLoader(false)
+            }
         }
-    }
-    fettchDataUser();
+        fettchDataUser();
     },[reload])
     const deletePropery = () => {
         const delte = propertiesUser.filter(pro => pro.deleted_at === null)
@@ -63,8 +63,8 @@ const Profile = () => {
         // toast.error("Property Delete SuccessFully !");
     }
 
-    const showNotifiUpdate = () => [
-      toast.success("Property Upated SuccessFully")
+    const showNotifiDelete = () => [
+      toast.error("Property Delete SuccessFully")
     ]
 
    return (
@@ -117,7 +117,7 @@ const Profile = () => {
                 {/* Name & Bio */}
                 <h1 className='text-center mt-10 font-bold text-xl'>{user.name}</h1>
                 <div className='text-center mt-3'>
-                    {user.bio ? <h1>{user.bio}</h1> : null}
+                    {user.bio ? <h1 className='px-2'>{user.bio}</h1> : null}
                 </div>
                 <hr  className='w-1/2 mx-auto bg-black my-4'/>
             </div>
@@ -135,7 +135,7 @@ const Profile = () => {
       {propertiesUser.length > 0 ? (<>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-14 p-3'>
           {propertiesUser.map(task => {
-              return <PropertiesUserProfile key={task.id} {...task} loader={loader} deletePropery={deletePropery} setId={setId} showNotifiUpdate={showNotifiUpdate} />
+              return <PropertiesUserProfile key={task.id} {...task} loader={loader} deletePropery={deletePropery} setId={setId} setReload={setReload} showNotifiDelete={showNotifiDelete} />
           })}
       </div>
       </>):(

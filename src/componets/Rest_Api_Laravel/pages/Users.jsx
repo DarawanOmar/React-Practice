@@ -31,7 +31,7 @@ const Users = () => {
   },[search,user])
 
   return (
-    <div className='bg-neutral-200 '>
+    <div className='bg-neutral-200'>
 
       {/* Top text Back Button */}
       <div className="flex justify-between items-center p-2">
@@ -50,11 +50,16 @@ const Users = () => {
           </div>
 
         {/* Users */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6 pb-20">
-          {searchResult.map(user=>{
-            return <ListUser key={user.id} {...user}/>
-          })}
-        </div>
+        {searchResult.length > 0 ? 
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6 pb-20">
+            {searchResult.map(user=>{
+              return <ListUser key={user.id} {...user}/>
+            })}
+          </div>
+          :
+          <h1 className='text-center font-bold text-xl mt-20'> User <span className='text-rose-500'> ( {search} ) </span> Not Found</h1>
+
+        }
     </div>
   )
 }

@@ -2,7 +2,7 @@ import axios from 'axios'
 import React from 'react'
 import {MdWarning} from 'react-icons/md'
 
-const ModelDeleteProperty = ({setShowModel, id, deletePropery, setId}) => {
+const ModelDeleteProperty = ({setShowModel, id, deletePropery, setId, setReload, showNotifiDelete}) => {
 
   const handleDeletePropety = async () => {
     try {
@@ -11,9 +11,11 @@ const ModelDeleteProperty = ({setShowModel, id, deletePropery, setId}) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }});
+        setReload(prev=>!prev)
         setShowModel(false);
         setId(id);
         deletePropery();
+        showNotifiDelete();
     } catch (error) {
         console.error("Error deleting property:", error);
     }

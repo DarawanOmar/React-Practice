@@ -7,13 +7,13 @@ import { Link } from 'react-router-dom';
 
 const List = ({id,title, price, bedroom, bathroom, kitchen, area, city, catigorey, photos}) => {
   return (
-    <div className='flex space-x-3 items-center p-3 rounded-3xl bg-white shadow-xl'>
+    <div className='flex justify-between  space-x-3  p-3 rounded-3xl bg-white shadow-xl'>
 
       {/* Image */}
         {photos.length > 0 ?
-          <Link to={`/properties/property/${id}`}><img className='rounded-[20px] w-20 h-20' src={photos[0]} alt="Imahe" /></Link>
+          <Link to={`/properties/property/${id}`}><img className='rounded-[20px] w-20 h-20 object-cover' src={photos[0]} alt="Imahe" /></Link>
         :
-          <Link to={`/properties/property/${id}`}><img className='rounded-[20px] w-20 h-20' src="https://img.freepik.com/free-photo/new-buildings-with-green-areas_1122-1533.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph" alt="" /></Link>
+          <Link to={`/properties/property/${id}`}><img className='rounded-[20px] w-20 h-20 object-cover' src="https://img.freepik.com/free-photo/new-buildings-with-green-areas_1122-1533.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph" alt="" /></Link>
         }
 
         {/* Texts */}
@@ -22,10 +22,8 @@ const List = ({id,title, price, bedroom, bathroom, kitchen, area, city, catigore
           {/* Title & Price */}
             <div className='flex justify-between items-center'>
               <div className='font-bold text-lg flex items-center space-x-1 capitalize'>
-                <h1>{title.length > 8 ? `${title.slice(0,8)}` : title}</h1>
-                <h1>{catigorey.name}</h1> 
+                <h1>{title.length > 10 ? `${title.slice(0,10)}..` : title}</h1>
               </div>
-              <h1 className='text-blue-700 font-bold text-lg ml-4'>{price}$</h1>
             </div>
 
             {/* Location & IconLoccaiton */}
@@ -42,6 +40,7 @@ const List = ({id,title, price, bedroom, bathroom, kitchen, area, city, catigore
               <div className='text-gray-400 text-sm  flex items-center space-x-1'>{kitchen && <span className='text-orange-600'><GiCampCookingPot /></span>}<h1> {kitchen}</h1></div>
             </div>
         </div>
+              <h1 className='text-blue-700 font-bold text-lg ml-4'>{price}$</h1>
     </div>
   )
 }

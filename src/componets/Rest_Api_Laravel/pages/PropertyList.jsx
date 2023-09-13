@@ -2,9 +2,12 @@ import React from 'react'
 import { FaBath, FaBed } from 'react-icons/fa'
 import { GiCampCookingPot } from 'react-icons/gi'
 import { ImLocation } from 'react-icons/im'
+import { BsFillTelephoneFill } from 'react-icons/bs'
+import { TiLocation } from 'react-icons/ti'
 
-const PropertyList = ({title, price, bedroom, bathroom, kitchen, area, city, catigorey, user, description, photos}) => {
-  return (
+const PropertyList = ({title, price, bedroom, bathroom, kitchen, area, city, catigorey, user, description, photos, address}) => {
+
+    return (
     <div className=' '>
         <div className="bg-white rounded-2xl flex flex-col space-y-3 p-3">
             {/* Image */}
@@ -17,8 +20,7 @@ const PropertyList = ({title, price, bedroom, bathroom, kitchen, area, city, cat
             {/* name & Price */}
             <div className='flex justify-between items-center py-2'>
             <div className='font-bold text-xl flex items-center space-x-2 capitalize'>
-                <h1>{title}</h1>
-                <h1>{catigorey.name}</h1> 
+                <h1>{title.length > 15 ? `${title.slice(0,15)}...` : title}</h1>
             </div>
             <h1 className='text-blue-700 font-bold text-xl'>{price}$</h1>
             </div>
@@ -31,16 +33,16 @@ const PropertyList = ({title, price, bedroom, bathroom, kitchen, area, city, cat
             </div>
             {/* Bed & Bath & kitchen */}
             <div className="flex space-x-10 px-4">
-            <div className='text-gray-400 text-sm  flex items-center space-x-1'><span className='text-orange-600'><FaBed /></span> <h1 className='flex space-x-2'>{bedroom}</h1> <span>Bed</span> </div>
-            <div className='text-gray-400 text-sm  flex items-center space-x-1'><span className='text-orange-600'><FaBath /></span> <h1>{bathroom}</h1><span>Bath</span> </div>
-            <div className='text-gray-400 text-sm  flex items-center space-x-1'><span className='text-orange-600'><GiCampCookingPot /></span><h1> {kitchen}</h1> <span>Kitchen</span></div>
-            </div>
+              <div className='text-gray-400 text-sm  flex items-center space-x-1'>{bedroom && <span className='text-orange-600'><FaBed /></span>} <h1 className='flex space-x-2'>{bedroom}</h1> </div>
+              <div className='text-gray-400 text-sm  flex items-center space-x-1'>{bathroom && <span className='text-orange-600'><FaBath /></span>} <h1>{bathroom}</h1> </div>
+              <div className='text-gray-400 text-sm  flex items-center space-x-1'>{kitchen && <span className='text-orange-600'><GiCampCookingPot /></span>}<h1> {kitchen}</h1></div>            </div>
         </div>
+        {/* user Infon */}
         <div className="flex flex-col space-y-3 p-3 bg-white rounded-2xl my-8 ">
             <div className='flex items-center'>
                 {user?.image ? 
                     <img className='w-12 h-12 object-cover rounded-xl' src={user.photo} alt="user" />
-                :
+                    :
                     <img className='w-12 h-12 object-cover rounded-xl' src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg" alt="" />
                 }
                 <div className='ml-3'>
@@ -49,7 +51,16 @@ const PropertyList = ({title, price, bedroom, bathroom, kitchen, area, city, cat
                 </div>
             </div>
             <div className="p-1">
+                <h1 className='font-bold bg-zinc-300 my-2 rounded-md max-w-max text-black px-1'>#{catigorey.name}</h1> 
+                <h1 className='font-bold bg-zinc-300 my-2 rounded-md max-w-max text-black px-1'>#{title}</h1> 
                 <p>{description}</p>
+            </div>
+            <div className='flex items-center space-x-1'>
+                <span className='text-indigo-500'> <BsFillTelephoneFill/> </span>
+                <h1>{user.phone_number}</h1>
+            </div>
+            <div className='flex items-center space-x-1'>
+                <span className=' flex items-'><span className='text-xl text-indigo-500'><TiLocation/></span>{address} </span>
             </div>
         </div>
     </div>

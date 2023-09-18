@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom'
 
 const ForgotPassword = () => {
   return (
-    <div className='bg-neutral-200 h-screen '>
+    <div className='bg-neutral-100 h-screen max-w-7xl mx-auto'>
         <div className="flex items-center p-2">
                 <Link to='/login' className='text-xl text-indigo-500'><IoIosArrowBack/></Link>
                 <h1 className='text-xl font-bold  '><Link to='/login'>Login</Link></h1>
-            .</div>
+            </div>
 
         <div className='max-w-7xl mx-auto'>
             <div className="text-center pt-10 text-lg font-bold p-1">

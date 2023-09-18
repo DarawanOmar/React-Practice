@@ -3,10 +3,11 @@ import { IoIosArrowBack } from 'react-icons/io'
 import { SlArrowRight } from 'react-icons/sl'
 import { Link, useNavigate } from 'react-router-dom'
 import userimage from '../img/user.png'
-import Password from '../img/password(1).png'
+import Password from '../img/password2.png'
 import logout from '../img/logout.png'
 import shild from '../img/shield.png'
-import chnagename from '../img/chagename.png'
+import feedback from '../img/feedback.png'
+import setting from '../img/settings (1).png'
 import axios from 'axios'
 import { useState } from 'react'
 import { useEffect } from 'react'
@@ -44,9 +45,9 @@ const Setting = () => {
       }
 
     return (
-    <div>
+    <div className='max-w-7xl mx-auto h-screen'>
         {/* Top Back Button */}
-         <div className="flex justify-between items-center p-2 px-4">
+         <div className="flex md:hidden  justify-between items-center p-2 px-4">
             <div className="flex space-x-3">
                 <Link to='/home' className='text-xl text-indigo-500 mt-1'><IoIosArrowBack/></Link>
                 <h1 className='text-xl font-realEstate2 font-bold mb-1 '><Link to='/home'>Setting</Link></h1>
@@ -54,36 +55,36 @@ const Setting = () => {
         </div>
 
         {/* Profile */}
-        <div className='p-3'>
-            <div className="flex justify-between items-center   bg-indigo-50 rounded-2xl p-2">
+        <div className='p-3 md:mt-6 '>
+            <div className="flex justify-between items-center   bg-indigo-50 rounded-2xl p-2 md:p-4 md:shadow-xl">
                 <div className="flex items-center">
                     {user.image ?
-                        <span><img className='w-11 h-11 rounded-full object-cover' src={user.photo} alt="user" /></span>
+                        <span><img className='w-11 h-11 md:w-14 md:h-14 rounded-full object-cover' src={user.photo} alt="user" /></span>
                     :
-                        <span><img className='w-11 h-11 ' src={userimage} alt="images" /></span>
+                        <span><img className='w-11 h-11 md:w-14 md:h-14 ' src={userimage} alt="images" /></span>
                     }
-                    <h1 className='ml-3 font-bold'><Link to='/profile'>Personal Profile</Link></h1>
+                    <h1 className='ml-3 font-bold md:text-xl'><Link to='/profile'>Personal Profile</Link></h1>
                 </div>
                  <span className='text-lg pr-6'><Link to='/profile' ><SlArrowRight/></Link></span>
             </div>
         </div>
 
-        {/* Change Name&Email */}
+        {/* Setting */}
         <div className='p-3'>
-            <div className="flex justify-between items-center   bg-indigo-50 rounded-2xl p-2">
+            <div className="flex justify-between items-center   bg-indigo-50 rounded-2xl p-3 md:p-4 md:shadow-xl">
                 <div className="flex items-center">
-                    <span><img className='w-8 h-8 ' src={chnagename} alt="" /></span>
-                    <h1 className='ml-4 font-bold'><Link to='/changename'>Change Name</Link></h1>
+                    <span><img className='w-8 h-8 md:w-14 md:h-14' src={setting} alt="" /></span>
+                    <h1 className='ml-4 font-bold md:text-xl'><Link to='/changename'>Setting</Link></h1>
                 </div>
-                 <span className='text-lg pr-6'><Link><SlArrowRight/></Link></span>
+                 <span className='text-lg pr-6'><Link to='/changename'><SlArrowRight/></Link></span>
             </div>
         </div>
         {/* Change Password */}
         <div className='p-3'>
-            <div className="flex justify-between items-center   bg-indigo-50 rounded-2xl p-2">
+            <div className="flex justify-between items-center   bg-indigo-50 rounded-2xl p-3 md:p-4 md:shadow-xl">
                 <div className="flex items-center">
-                    <span><img className='w-8 h-8 ' src={Password} alt="" /></span>
-                    <h1 className='ml-4 font-bold'><Link to='/changepassword'>Change Password</Link></h1>
+                    <span><img className='w-8 h-8 md:w-14 md:h-14' src={Password} alt="" /></span>
+                    <h1 className='ml-4 font-bold md:text-xl'><Link to='/changepassword'>Change Password</Link></h1>
                 </div>
                  <span className='text-lg pr-6'><Link><SlArrowRight/></Link></span>
             </div>
@@ -92,22 +93,33 @@ const Setting = () => {
 
         {/* Privcy Policy */}
         <div className='p-3'>
-            <div className="flex justify-between items-center   bg-indigo-50 rounded-2xl p-2">
+            <div className="flex justify-between items-center   bg-indigo-50 rounded-2xl p-2 md:p-4 md:shadow-xl">
                 <div className="flex items-center">
-                    <span><img className='w-11 h-11 ' src={shild} alt="" /></span>
-                    <h1 className='ml-3 font-bold'><Link to='/privicyandpoliciy'>Privcy Policy</Link></h1>
+                    <span><img className='w-11 h-11 md:w-14 md:h-14' src={shild} alt="" /></span>
+                    <h1 className='ml-3 font-bold md:text-xl'><Link to='/privicyandpoliciy'>Privcy Policy</Link></h1>
                 </div>
-                 <span className='text-lg pr-6'><Link><SlArrowRight/></Link></span>
+                 <span className='text-lg pr-6'><Link to='/privicyandpoliciy'><SlArrowRight/></Link></span>
+            </div>
+        </div>
+
+        {/* FeedBack */}
+        <div className='p-3'>
+            <div className="flex justify-between items-center   bg-indigo-50 rounded-2xl p-2 md:p-4 md:shadow-xl">
+                <div className="flex items-center">
+                    <span><img className='w-11 h-11 md:w-14 md:h-14' src={feedback} alt="" /></span>
+                    <h1 className='ml-3 font-bold md:text-xl'><Link to='/contact'>FeedBack</Link></h1>
+                </div>
+                 <span className='text-lg pr-6'><Link to='/contact' ><SlArrowRight/></Link></span>
             </div>
         </div>
        
 
         {/* Logout */}
         <div className='p-3'>
-            <div className="flex justify-between items-center   bg-indigo-50 rounded-2xl p-3">
+            <div className="flex justify-between items-center   bg-indigo-50 rounded-2xl p-3 md:p-4 md:shadow-xl">
                 <div className="flex items-center">
-                    <span><img className='w-8 h-8 ' src={logout} alt="" /></span>
-                    <button onClick={handleLogout} className='ml-5 text-md font-bold'>Log Out</button>
+                    <span><img className='w-8 h-8 md:w-14 md:h-14' src={logout} alt="" /></span>
+                    <button onClick={handleLogout} className='ml-5 text-md font-bold md:text-xl'>Log Out</button>
                 </div>
             </div>
         </div>

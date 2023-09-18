@@ -34,7 +34,7 @@ const FavoraiteProperties = () => {
 
   if(loader) {
     return (
-      <>
+      <div className='max-w-7xl mx-auto'>
       <div className="flex justify-between items-center p-2 px-4">
         <div className="flex items-center space-x-2">
           <Link to='/home' className='text-xl text-indigo-500'><IoIosArrowBack/></Link>
@@ -75,7 +75,7 @@ const FavoraiteProperties = () => {
         </div>
       </div>
 
-        </>
+        </div>
     )
   }
 

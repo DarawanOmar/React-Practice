@@ -27,7 +27,7 @@ const RunRestApiLaravel = () => {
   const location = useLocation();
 
   // An array of paths where you don't want to show the Navbar
-  const pathsWithoutNavbar = ['/', '/intro02', '/login'];
+  const pathsWithoutNavbar = ['/', '/intro02', '/login','/register', '/forgotpassword'];
 
   return (
     <div className='font-realEstate2'>

@@ -27,7 +27,7 @@ const ModelAddImageProfile = ({ setShowAddImageProfile, setReload }) => {
               setShowAddImageProfile(false)
               setReload(prev => !prev)
             } else{
-                console.log("Faild Upload");
+                console.log(response.data.Erros);
             }
         } catch (error) {
             console.error('Error uploading image:', error);

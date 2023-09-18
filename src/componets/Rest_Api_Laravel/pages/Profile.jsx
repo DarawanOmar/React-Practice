@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { IoIosArrowBack } from 'react-icons/io'
 import PropertiesUserProfile from '../components/PropertiesUserProfile'
 import { Bounce, toast, ToastContainer  } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,6 +12,7 @@ import { BiDotsVerticalRounded } from 'react-icons/bi'
 import ModelAddImageCover from '../components/ModelAddImageCover'
 import ModelAddImageProfile from '../components/ModelAddImageProfile'
 import ModelAddBio from '../components/ModelAddBio'
+import { IoIosArrowBack } from 'react-icons/io'
 
 const Profile = () => {
     
@@ -42,7 +42,7 @@ const Profile = () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }});
-                if(user && data){
+                if(user && data.data.Properties){
                     setUser(user.data)
                     setPropertiesUser(data.data.Properties.data)
                 }else{
@@ -67,16 +67,17 @@ const Profile = () => {
       toast.error("Property Delete SuccessFully")
     ]
 
+    console.log(propertiesUser);
    return (
     <div className='bg-neutral-100 max-w-7xl mx-auto'>
 
         {/* Top Text & BookMark */}
-       <div className="flex justify-between items-center p-3">
-            <div className="flex items-center">
+       <div className="flex justify-between md:justify-end items-center p-3">
+            <div className="flex md:hidden items-center">
                 <Link to='/setting' className='text-xl text-indigo-500'><IoIosArrowBack/></Link>
                 <h1 className='text-xl font-bold  '><Link to='/setting'> Own Profile</Link></h1>
             </div>
-            <span onClick={()=>setShowEdit(prev=>!prev)} className='text-2xl rounded-md'> <BiDotsVerticalRounded/></span>
+            <span onClick={()=>setShowEdit(prev=>!prev)} className='text-2xl md:text-3xl cursor-pointer rounded-md'> <BiDotsVerticalRounded/></span>
         </div>
         {/* User Email & Name */}
         {!loader ? (<>
@@ -86,20 +87,20 @@ const Profile = () => {
                 <div className="relative">
                     {user?.cover ? 
                     (<>
-                        <img className='max-h-[200px] w-full object-cover' src={`http://localhost:8000/upload/users/${user.cover}`} alt="buling" />
+                        <img className='max-h-[200px] md:max-h-[390px] w-full object-cover' src={`http://localhost:8000/upload/users/${user.cover}`} alt="buling" />
                     </>) 
                     :(<>
-                        <img className='max-h-[200px] w-full object-cover' src="https://img.freepik.com/free-photo/top-view-wooden-frame-with-copy-space_23-2148553336.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph" alt="buling" />
+                        <img className='max-h-[200px] md:max-h-[390px] w-full object-cover' src="https://img.freepik.com/free-photo/top-view-wooden-frame-with-copy-space_23-2148553336.jpg?size=626&ext=jpg&uid=R76012333&ga=GA1.2.656506428.1687210625&semt=sph" alt="buling" />
                     </>)}
-                    <span className='absolute top-[50%] left-[35%] md:left-[45%] border-[6px] rounded-full border-white'>
+                    <div className='absolute top-[50%] md:top-[60%] left-[35%] md:left-[40%] lg:left-[45%] border-[6px] rounded-full border-white'>
                         {user?.image ? 
                         (<>
-                            <img className='w-28 h-28 rounded-full object-cover' src={user.photo}  alt="" />
+                            <img className='w-28 h-28 md:w-44 md:h-44  rounded-full object-cover' src={user.photo}  alt="" />
                         </>) 
                         : (<>
-                             <img className='w-28 h-28 rounded-full object-cover' src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"  alt="userKnown" />
+                             <img className='w-28 h-28 md:w-44 md:h-44 rounded-full object-cover' src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"  alt="userKnown" />
                         </>)}
-                    </span>
+                    </div>
 
                     {/* Edit */}
                     <div className={showEdit ? "absolute top-0 right-0 bg-white flex flex-col justify-center items-center p-3 rounded-md translate-x-0 ease-in-out duration-500 ":"-translate-x-2 text-white ease-in duration-500 -z-10 absolute top-7 right-2"}>
@@ -115,23 +116,23 @@ const Profile = () => {
                     </div>
                 </div>
                 {/* Name & Bio */}
-                <h1 className='text-center mt-10 font-bold text-xl'>{user.name}</h1>
+                <h1 className='text-center mt-10 font-bold text-xl md:text-3xl'>{user.name} {user?.nickname && <span className='text-md'>({user?.nickname})</span>} </h1>
                 <div className='text-center mt-3'>
-                    {user.bio ? <h1 className='px-2'>{user.bio}</h1> : null}
+                    {user.bio ? <h1 className='px-2 md:text-2xl'>{user.bio}</h1> : null}
                 </div>
                 <hr  className='w-1/2 mx-auto bg-black my-4'/>
             </div>
         </>) : 
         <>
             <div className=''>
-                <div className="bg-gray-300 h-44 w-full animate-pulse relative">
-                    <div className="absolute bg-gray-400 border-[8px] border-white w-32 h-32 rounded-full top-[50%] left-[35%] md:left-[50%]"></div>
+                <div className="bg-gray-300 h-44 md:h-96 w-full animate-pulse relative">
+                    <div className="absolute bg-gray-400 border-[8px] border-white w-32 h-32 md:h-52 md:w-52 rounded-full top-[50%] left-[35%] md:left-[40%]"></div>
                 </div>
             </div>
         </>}
 
       {/* Properties */}
-      <h1 className='font-bold text-xl p-3'>Our Properties</h1>
+      <h1 className='font-bold text-xl md:text-2xl p-3'>Our Properties</h1>
       {propertiesUser.length > 0 ? (<>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-14 p-3'>
           {propertiesUser.map(task => {
@@ -139,7 +140,7 @@ const Profile = () => {
           })}
       </div>
       </>):(
-        <div className="text-center mb-16 pb-5">
+        <div className="text-center mb-20 pb-5">
             {!loader && (<>
                 <div className='w-20 h-20 '>
                     <span className='w-10 h-10'>
@@ -150,7 +151,7 @@ const Profile = () => {
                 <Link to='/addproperty' className=' bg-gradient-to-r from-indigo-500  via-indigo-700  to-indigo-500 px-6 py-2 rounded-md text-white'>Add Property</Link>
             </>)}
         </div>
-      )}
+      )} 
        {showAddImageCover &&  <ModelAddImageCover setShowAddImageCover={setShowAddImageCover} setReload={setReload}/> }
        {showAddImageProfile &&  <ModelAddImageProfile setShowAddImageProfile={setShowAddImageProfile} setReload={setReload}/> }
        {showAddBio &&  <ModelAddBio setShowAddBio={setShowAddBio} setReload={setReload}/> }

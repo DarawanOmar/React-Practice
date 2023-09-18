@@ -30,7 +30,7 @@ const ModelAddImageProperty = ({ idProperty, setShowModel }) => {
               setShowModel(false)
               navigate('/home')
             } else{
-                console.log("Faild Upload");
+                console.log(response.data.errors);
             }
         } catch (error) {
             console.error('Error uploading image:', error);

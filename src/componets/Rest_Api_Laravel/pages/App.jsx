@@ -29,10 +29,12 @@ const MAX_AREA = 10000;
 const App = () => {
     const [properties, setproperties] = useState([]);
     const [propertiesPriceDesc, setpropertiesPriceDesc] = useState([]);
+    const [propertiesCatigorey, setpropertiesCatigorey] = useState([]);
     const [loader, setLoader] = useState(true)
     const [filter, setFilter] = useState(false)
     const {width} = useWindoSize();
     const [page, setPage] = useState(1);
+    const [cati, setCati] = useState(null);
     const [cities, setCities] = useState([]);
     const [search, setSearch] = useState('');
     const [valuesPrice, setValuesPrice] = useState([MIN_PRICE, MAX_PRICE]);
@@ -51,6 +53,16 @@ const App = () => {
         }, 2000);
     },[page])
 
+    
+    useEffect(()=>{
+        const handleFilterCatigorey = async () => {
+            const response = await axios.get(`http://localhost:8000/api/properties?catigorey_id=${cati}&page=${page}`)
+            setpropertiesCatigorey(prev => [...prev ,...response.data.properties.data])
+        }
+        handleFilterCatigorey()
+    },[page, cati])
+
+
     const searachInput = async (name) => {
         const city = await axios.get('/cities');
         const filterCity = city.data.filter(city =>{
@@ -63,27 +75,27 @@ const App = () => {
         searachInput(name)
         setSearch(name)
     }
+
+
     const handleFilter = async () => {
-        const response = await axios.get(`http://localhost:8000/api/properties?area[0]=${valuesArea[0]}&area[1]=${valuesArea[1]}&price[0]=${valuesPrice[0]}&price[1]=${valuesPrice[1]}`)
-        setproperties(response.data.properties.data)
+        const response = await axios.get(`http://localhost:8000/api/filterbetween?area[0]=${valuesArea[0]}&area[1]=${valuesArea[1]}&price[0]=${valuesPrice[0]}&price[1]=${valuesPrice[1]}`)
+        setpropertiesPriceDesc(response.data.properties)
     }
 
-    const handleFilterCatigorey = async (id) => {
-        const response = await axios.get(`http://localhost:8000/api/properties?catigorey_id=${id}`)
-        setproperties(response.data.properties.data)
-    }
+
     const filterButton = () => {
         setFilter(prev => !prev)
     }
 
     const seeMore = () => {
-        setPage(page + 1)
+        setPage(prevPage => prevPage + 1)
       }
 
+
     return (
-    <div id='1' className='max-w-7xl mx-auto   bg-neutral-100 font-realEstate2'>
+    <div id='1' className='max-w-7xl mx-auto  bg-neutral-100  font-realEstate2'>
         {/* User Name & Profile */}
-        <div className=''><ProfileHeader/></div>
+        <div className='md:hidden'><ProfileHeader/></div>
         {/* Category & Filter */}
         <div className='flex flex-col md:flex-row-reverse md:justify-between md:items-center p-4 relative'>
             {/* Filter & Search */}
@@ -93,17 +105,17 @@ const App = () => {
                     <input value={search} onChange={(e) => handleSearch(e.target.value)} className='p-3 bg-transparent focus:outline-none w-full rounded-lg  placeholder:text-gray-400 shadow-sm' type="text" placeholder='Search City' />
                 </div>
                 <div>
-                    <div className="flex items-center space-x-2 bg-blue-700  rounded-xl px-4 py-[11px] ">
+                    <div className="flex items-center space-x-2 bg-indigo-600  rounded-xl px-4 py-[11px] ">
                         <h1 className='bg-white rounded-full flex justify-center items-center w-5 h-5 text-blue-700'><BiFilter/></h1>
                         <h1 className='text-white'><button onClick={filterButton}>Filters</button></h1>
                     </div>
                 </div>
             </div>
             {search ? (<>
-            <div className="absolute mt-2 w-[233px] md:w-1/3 mx-auto border border-t-0 rounded-b-md shadow-lg z-10 top-[65px]">
+            <div className="absolute mt-2 w-[233px] md:w-[240px] md:right-[150px] mx-auto border border-t-0 rounded-b-md  shadow-lg z-10 top-[65px] md:top-[85px]">
                 {cities.map(city => (
                     <div key={city.id}>
-                        <h1 className='w-full text-center bg-white  rounded-b-xl p-2'>
+                        <h1 className='w-full text-center bg-white  rounded-b-xl md:rounded-none p-2 hover:bg-black hover:text-white'>
                             <Link to={`/searchproperty/${city.id}`}> {city.name} </Link>
                         </h1>
                     </div>
@@ -113,15 +125,23 @@ const App = () => {
             </>) :null}
             {/* categoties */}
             <div className="flex justify-between items-center  mt-6 mb-8 md:space-x-10 lg:space-x-20">
-                <a href='#2'><button onClick={() => handleFilterCatigorey(3)} className='bg-white  flex justify-center items-center rounded-lg p-3'><img className='w-8 h-8' src={category} alt="" /></button></a>
-                <a href='#2'><button onClick={() => handleFilterCatigorey(1)} className='bg-white  flex justify-center items-center rounded-lg p-3'><img className='w-8 h-8' src={apet} alt="" /></button></a>
-                <a href='#2'><button onClick={() => handleFilterCatigorey(2)} className='bg-white  flex justify-center items-center rounded-lg p-3'><img className='w-8 h-8' src={landd} alt="" /></button></a>
-                <a href='#2'><button onClick={() => handleFilterCatigorey(4)} className='bg-white  flex justify-center items-center rounded-lg p-3'><img className='w-8 h-8' src={house} alt="" /></button></a>
+                <a href='#2'><button onClick={() => {
+                    setpropertiesCatigorey([])
+                    setCati(4)}} className='bg-white flex justify-center items-center rounded-lg p-3'><img className='w-8 h-8' src={category} alt="" /></button></a>
+                <a href='#2'><button onClick={() => {
+                    setpropertiesCatigorey([])
+                    setCati(2)}} className='bg-white flex justify-center items-center rounded-lg p-3'><img className='w-8 h-8' src={apet} alt="" /></button></a>
+                <a href='#2'><button onClick={() => {
+                    setpropertiesCatigorey([])
+                    setCati(3)}} className='bg-white flex justify-center items-center rounded-lg p-3'><img className='w-8 h-8' src={landd} alt="" /></button></a>
+                <a href='#2'><button onClick={() => {
+                    setpropertiesCatigorey([])
+                    setCati(1)}} className='bg-white flex justify-center items-center rounded-lg p-3'><img className='w-8 h-8' src={house} alt="" /></button></a>
             </div>
         </div>
 
           {/* Filter */}
-            <div id='2' className={filter ? 'bg-neutral-200 w-full h-[500px] fixed bottom-14 rounded-t-[40px] p-4  ease-in-out duration-500 z-10' : ' translate-y-72 ease-in-out duration-500'}>
+            <div id='2' className={filter ? 'bg-neutral-100 w-full h-[500px] fixed md:static bottom-[54px] rounded-t-[40px] p-4  ease-in-out duration-500 z-10' : ' translate-y-72 ease-in-out duration-500'}>
             {filter && <>
                 <button className='font-bold text-lg' onClick={filterButton}>x</button>
                 <h1 className='text-center text-2xl font-bold '>Filter</h1>
@@ -163,7 +183,7 @@ const App = () => {
 
         {/* Newest Property */}
         <div className="flex justify-between items-center my-3 p-4">
-            <h1 className='font-bold text-lg'>Newest Property</h1>
+            <h1 className='font-bold text-xl'>Newest Property</h1>
             <div className='flex  text-green-500 space-x-1 '>
                 <Link to='/properties'>See All</Link>
                 <span className='mt-[5px]'><GoTriangleRight/></span>
@@ -187,19 +207,24 @@ const App = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 mb-8"></div>
     
         {/* Expensive Property  */}
-        <h1 className='font-bold text-lg mt-10 px-4'>Expensive Property</h1>
-        {properties && (<>
+        <h1 className='font-bold text-xl mt-10 px-4'>Expensive Property</h1>
+        {propertiesPriceDesc.length > 0 || propertiesCatigorey.length > 0 ? (<>
         <div id='2' className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6  p-4 scroll-mt-20 '>
-            {propertiesPriceDesc.map((item, index) => {
+            
+            {propertiesCatigorey.length > 0 ? propertiesCatigorey.map((item, index) => {
+                return (
+                    <List key={index} {...item} loader={loader}/>
+                );
+            }) : propertiesPriceDesc.map((item, index) => {
                 return (
                     <List key={index} {...item} loader={loader}/>
                 );
             })}
         </div>
-        </>)}
-        <div className="text-center pb-10">
-          {properties.length < 100 && (
-            <button onClick={seeMore } className='btn-action mb-10'>See More</button>
+        </>) : null}        
+        <div className="text-center pb-20">
+          {propertiesPriceDesc.length < 100 && (
+            <button onClick={seeMore } className='btn-action mb-10 hover:opacity-60'>See More</button>
           )}
         </div>
     </div>

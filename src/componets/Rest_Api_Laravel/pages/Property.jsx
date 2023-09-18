@@ -44,7 +44,6 @@ const Property = () => {
         fetchData();
     },[reload])
 
-
     const addPropertyToFavorairte = async() => {
         const response = await axios.post(`http://localhost:8000/api/createtablefavoraite`,{ property_id:id, addtofavoraite:"true"},{headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -71,10 +70,9 @@ const Property = () => {
         }
     }
 
-
     if(loader) {
         return (
-          <div className=''>
+          <div className='max-w-7xl mx-auto'>
             <div className="">
               <Link to='/home' className="flex items-center space-x-1 p-3">
                 <h1  className='text-xl text-indigo-500'><IoIosArrowBack/></h1>
@@ -115,16 +113,17 @@ const Property = () => {
             </div>
             {/* BookMark Icon */}
             {check.length > 0 ?
-                <span className='text-indigo-600 text-xl'>
+                <span className='text-indigo-600 text-xl md:text-3xl'>
                     {check[0].isfavoraite === "true" ? 
-                    <button>{ <MdBookmarkAdded/>}</button> 
-                    : <button onClick={() => {
-                        addPropertyToFavorairte()
-                        setReload(prev=>!prev)
-                    }}>{ <MdBookmarkAdd/>}</button>}
+                        <button>{ <MdBookmarkAdded/>}</button> 
+                    : 
+                        <button onClick={() => {
+                            addPropertyToFavorairte()
+                            setReload(prev=>!prev)
+                        }}>{ <MdBookmarkAdd/>}</button>}
                 </span>
                 :
-                <span className='text-indigo-600 text-xl'> 
+                <span className='text-indigo-600 text-xl md:text-3xl'> 
                 <button onClick={() => {
                     addPropertyToFavorairte()
                     setReload(prev=>!prev)
@@ -135,7 +134,7 @@ const Property = () => {
         </div>
 
         {/* Property */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 mt-7">
+        <div className=" px-6 mt-7">
             {property.map(item => {
                 return <PropertyList key={item.id} {...item} />
             })}
@@ -144,7 +143,7 @@ const Property = () => {
         <hr className='my-2 h-[1px] bg-black mx-auto w-1/2' />
         {/* Add Comment */}
         <div className="flex flex-col justify-center items-center mb-24 ">
-            <h1 className='text-center font-bold mb-2'>You Can Write Your Opinion About This Proaperty</h1>
+            <h1 className='text-center font-bold mb-2 md:text-xl'>You Can Write Your Opinion About This Proaperty</h1>
             <textarea onChange={(e)=>setTextComment(e.target.value)} value={textComment} type="text" className='p-2 text-center rounded-md w-full bg-gradient-to-r from-indigo-50  via-indigo-200  to-indigo-50 focus:outline-none placeholder:text-center' placeholder='Comment...'/>
             <button onClick={() => {
                 addCommentToProperty()
@@ -153,8 +152,8 @@ const Property = () => {
         </div>
 
         {/* Comments */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 mb-20">
-            {comments && (<>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 mb-16 md:mb-4">
+            {comments.length > 0 && (<>
                 {comments?.map((comment,index) =>{
                     return <CommentsList key={index} {...comment} />
                 })}

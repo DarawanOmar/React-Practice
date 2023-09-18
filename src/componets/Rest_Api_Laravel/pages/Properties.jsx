@@ -17,6 +17,7 @@ const MAX_AREA = 10000;
 const Properties = () => {
   const [originalProperties, setOriginalProperties] = useState([]);  
   const [displayedProperties, setDisplayedProperties] = useState([]);
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [loader, setLoader] = useState(true)
   const [filter, setFilter] = useState(false)
@@ -25,28 +26,27 @@ const Properties = () => {
 
   
   const fetchData = async ()=>{
-    const data = await axios.get(`/allproperties`);
-    setOriginalProperties(data.data.allProperties)
-    setDisplayedProperties(data.data.allProperties)
+    const data = await axios.get(`/allproperties?page=${page}`);
+    setOriginalProperties(data.data.allProperties.data)
+    setDisplayedProperties(prev => [...prev , ...data.data.allProperties.data])
   }
   useEffect(()=>{
     fetchData();
     setTimeout(() => {
       setLoader(false)
     }, 1500);
-  },[])
+  },[page])
   
-  
+
   const handleFilter = async () => {
     const response = await axios.get(`http://localhost:8000/api/properties?area[0]=${valuesArea[0]}&area[1]=${valuesArea[1]}&price[0]=${valuesPrice[0]}&price[1]=${valuesPrice[1]}`)
     setDisplayedProperties(response.data.properties.data)
 }
 
-
 // Input Search
 const searchProperties =  (name) => {
   const filtered = originalProperties.filter(property => {
-    return property.catigorey.name.toLowerCase().includes(name.toLowerCase()) || property.city.name.toLowerCase().includes(name.toLowerCase());
+    return property.catigorey.name.toLowerCase().includes(name.toLowerCase()) || property.city.name.toLowerCase().includes(name.toLowerCase()) || property.title.toLowerCase().includes(name.toLowerCase());
   });
   setDisplayedProperties(filtered);
 
@@ -68,12 +68,8 @@ const handleSearch = (name) => {
   
   if(loader) {
     return (
-      <div className=''>
+      <div className='max-w-7xl mx-auto'>
         <div className="">
-          <Link to='/home' className="flex items-center space-x-1 p-3">
-            <h1  className='text-xl text-indigo-500'><IoIosArrowBack/></h1>
-            <h1 className='text-xl font-bold mb-1 '>Home</h1>
-          </Link>
         </div>
         <div className="flex justify-between items-center space-x-3 px-4 mt-10">
             <p className='w-full h-10 rounded-md bg-gray-300 animate-pulse'></p>
@@ -111,37 +107,41 @@ const handleSearch = (name) => {
       </div>
     )
   }
+
+  const handlePage = () => {
+    setPage(prev => !prev)
+  }
   
   return (
-    <div className='max-w-7xl mx-auto bg-neutral-100  h-screen'>
-      <Link to='/home' className="flex items-center space-x-1 p-3">
+    <div className='max-w-7xl mx-auto bg-neutral-100 '>
+      <Link to='/home' className="flex md:hidden items-center space-x-1 p-3">
         <h1  className='text-xl text-indigo-500'><IoIosArrowBack/></h1>
         <h1 className='text-xl font-bold'>Home</h1>
       </Link>
       {/* Search & Filter */}
-      <div className="flex justify-between my-4 md:space-x-6 px-4">
-          <div className="flex bg-white items-center rounded-2xl mr-2">
+      <div className="flex justify-between my-4 md:space-x-6 px-4 mt-10">
+      <div className="flex bg-white items-center rounded-2xl mr-2">
               <span className='text-blue-600  p-2 text-2xl'><FiSearch/></span>
-              <input value={search} onChange={(e) => handleSearch(e.target.value)} className='p-3 bg-white focus:outline-none  rounded-lg  placeholder:text-gray-400 shadow-sm' type="text" placeholder='City || Catigorey...' />
+              <input value={search} onChange={(e) => handleSearch(e.target.value)} className='p-3 bg-white focus:outline-none  rounded-lg  placeholder:text-gray-400 shadow-sm' type="text" placeholder='Catigorey || City || Title' />
           </div>
           <div>
               <div className="flex items-center space-x-2 bg-blue-700 rounded-xl px-4 py-[11px] ">
-                  <h1 className='text-indigo-500 rounded-full flex justify-center items-center w-5 h-5 bg-white'><BiFilter/></h1>
-                  <h1 className='text-white'><button onClick={filterButton} >Filters</button></h1>
+                  <h1 className='bg-white rounded-full flex justify-center items-center w-5 h-5 text-blue-700'><BiFilter/></h1>
+                  <button onClick={filterButton} className='text-white md:text-xl'>Filters</button>
               </div>
           </div>
       </div>
 
       {/* Filter Price & Area */}
-      <div className={filter ? 'bg-neutral-200 w-full h-[490px] fixed bottom-14 rounded-t-[40px] p-4  ease-in-out duration-500 z-10' : ' translate-y-72 ease-in-out duration-500'}>
+      <div className={filter ? 'bg-neutral-100 w-full h-[500px] fixed md:static bottom-[54px] rounded-t-[40px] p-4  ease-in-out duration-500 z-10' : ' translate-y-72 ease-in-out duration-500'}>
             {filter && <>
-                <button className='font-bold text-lg' onClick={filterButton}>x</button>
+              <button className='font-bold text-lg' onClick={filterButton}>x</button>
                 <h1 className='text-center text-2xl font-bold '>Filter</h1>
                 <h1 className='text-xl font-bold mt-5 '>Property Type </h1>
 
                 <div className='mt-10 '>
-                  <div className='flex justify-between items-center '>
-                    <h1 className='font-bold text-md'>Property Price</h1>
+                <div className='flex justify-between items-center '>
+                        <h1 className='font-bold text-md'>Property Price</h1>
                     </div>
                     <div className='flex justify-between items-center '>
                         <h1 className='text-gray-400 text-sm'>Low</h1>
@@ -159,28 +159,37 @@ const handleSearch = (name) => {
                     </div>
                     <RangeSliderArea valuesArea={valuesArea} setValuesArea={setValuesArea} MIN_AREA= {MIN_AREA} MAX_AREA = {MAX_AREA} />
                 </div>
-                <div className=" mt-16 text-center">
-                    <a href='#2' className='text-center font-bold text-xl bg-gradient-to-l from-indigo-700 to-indigo-400 text-gray-200 py-2 rounded-md max-w-max px-10 mx-auto'><button onClick={() => {
+                <div className=" mt-16 flex justify-between items-center">
+                  <button onClick={()=>{
+                     setValuesPrice([MIN_PRICE, MAX_PRICE]);
+                     setValuesArea([MIN_AREA, MAX_AREA]);
+                  }} className='text-center text-white  text-lg bg-blue-700  py-[5px] rounded-md px-6'>Reset</button>
+                    <a href='#2' className='text-center text-white  text-lg bg-blue-700  py-[5px] rounded-md px-6 '><button onClick={() => {
                         handleFilter()
                         filterButton()
                         }}>Filter</button></a>
                 </div>
             </>}
             </div>
+      
 
       {/* Propserties */}
       <h1 className='text-xl font-bold ml-4 mb-6'>All Properties</h1>
       {displayedProperties.length > 0 ? 
-      <div id='2' className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 pb-16">
-            {displayedProperties.map((property,index) => {
-              return <PropertiesPage key={index} {...property} />
-            })}
-     
-      </div>
+        <div id='2' className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 pb-16">
+              {displayedProperties.map((property,index) => {
+                return <PropertiesPage key={index} {...property} />
+              })}
+      
+        </div>
       :
-      <h1 className='text-center font-bold text-2xl mt-20'> <span className='text-rose-500'>( {search} )</span> Not Found</h1>
+        <h1 className='text-center font-bold text-2xl mt-20'> <span className='text-rose-500'>( {search} )</span> Not Found</h1>
       }
-
+      {displayedProperties.length < 100 && 
+        <div className='text-center'>
+            <button onClick={handlePage} className='btn-action mb-10 py-2 px-10 duration-500 hover:opacity-70'>See More</button>
+        </div>
+      }
     </div>
   )
 }

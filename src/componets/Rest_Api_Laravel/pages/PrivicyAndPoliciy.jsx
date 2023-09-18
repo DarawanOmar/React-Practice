@@ -4,17 +4,17 @@ import { Link } from 'react-router-dom'
 
 const PrivicyAndPoliciy = () => {
   return (
-    <div className="p-2">
-      <div className="flex items-center">
+    <div className="p-2 max-w-7xl mx-auto h-screen md:text-2xl">
+      <div className="flex items-center md:hidden">
           <Link to='/setting' className='text-xl text-indigo-500'><IoIosArrowBack/></Link>
           <h1 className='text-xl font-bold  '><Link to='/setting'> Term Of Service</Link></h1>
       </div>
-      <div className='p-4'>
+      <div className='p-4 md:space-y-10'>
         <div className="">
           <h1 className='font-bold  py-3'>Privacy Choices</h1>
           <p>You have the following choices regarding our collection and use of your personal information:
             Online tracking opt-out. <br />
-            <span className='font-bold italic text-sm'>Blocking cookies in your browser</span>. Most browsers let you remove or reject cookies, including cookies used for interest-based advertising. To do this, follow the instructions in your browser settings.
+            <span className='font-bold italic text-sm md:text-2xl'>Blocking cookies in your browser</span>. Most browsers let you remove or reject cookies, including cookies used for interest-based advertising. To do this, follow the instructions in your browser settings.
           </p>
         </div>
         <div className="">

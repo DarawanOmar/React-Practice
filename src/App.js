@@ -47,7 +47,7 @@ function App() {
       {/* <RunFirebase/> */}
       {/* <RunSearchingWithApi/> */}
         <BrowserRouter>
-          <RunRestApiLaravel/>
+          <div className="bg-neutral-100"><RunRestApiLaravel/></div>
         </BrowserRouter>
 
     </div>

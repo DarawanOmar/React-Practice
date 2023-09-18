@@ -73,13 +73,13 @@ const AddProperty = () => {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }});
-            if(response){
+            if(response.data.Success){
                 reset()
                 setSendLoader(false)
                 setIdProperty(response.data.property.id)
                 setShowModel(true)
             }else{
-                console.log("dwada");
+                console.log(response.data.Errors);
             }
         } catch (error) {
             setError(error.response.data.Errors);   
@@ -101,12 +101,12 @@ const AddProperty = () => {
         )
     }
   return (
-    <div className="bg-blue-600 flex justify-center items-center h-screen ">
+    <div className=" flex justify-center items-center h-screen max-w-7xl mx-auto">
     <div className=" bg-neutral-200 rounded-t-3xl w-full px-6">
 
         <div className="mt-4 ml-0">
             <Link to='/profile' className='cursor-pointer '><IoMdArrowRoundBack/></Link>
-            <h1 className='text-center font-bold text-xl mb-2'>Add Property</h1>
+            <h1 className='text-center font-bold text-xl md:text-2xl mb-2'>Add Property</h1>
         </div>
         
         {/* Error */}
@@ -116,25 +116,25 @@ const AddProperty = () => {
             {/*  Title*/}
             <div className=' bg-white rounded-2xl p-2 my-3'>
             {errors.title && <h1 className='text-rose-500 text-md text-center'>{errors.title?.message}</h1>}
-                <input {...register("title")} type="text" className='p-2 focus:outline-none w-full text-center placeholder:text-center' placeholder='Title' />
+                <input {...register("title")} type="text" className='p-2 md:p-3 focus:outline-none w-full text-center placeholder:text-center' placeholder='Title' />
             </div>
 
             {/* Discripton */}
             <div className=' border-b-2 bg-white rounded-2xl p-2 my-3'>
             {errors.description && <h1 className='text-rose-500 text-md text-center'>{errors.description?.message}</h1>}
-                <input {...register("description")} type="text" className='p-2 focus:outline-none w-full text-center placeholder:text-center' placeholder='Discription' />
+                <input {...register("description")} type="text" className='p-2 md:p-3 focus:outline-none w-full text-center placeholder:text-center' placeholder='Discription' />
             </div>
 
             {/* Area & Price */}
             <div className='flex items-center space-x-2'>
                 {/* Price */}
-                <div className='border-b-2 bg-white rounded-2xl p-2 my-3'>
+                <div className='border-b-2 bg-white rounded-2xl p-2 my-3 md:w-full'>
                     {errors.price && <h1 className='text-rose-500 text-md text-center'>{errors.price?.message}</h1>}
                     <input {...register("price")} type="number" className='p-3 focus:outline-none rounded-xl  w-full text-center placeholder:text-center' placeholder='Price' />
                 </div>
 
                 {/*  Area*/}
-                <div className='border-b-2 bg-white rounded-2xl p-2 my-3'>
+                <div className='border-b-2 bg-white rounded-2xl p-2 my-3 md:w-full'>
                     {errors.area && <h1 className='text-rose-500 text-md text-center'>{errors.area?.message}</h1>}
                     <input {...register("area")} type="number" className='p-3 focus:outline-none rounded-xl  w-full text-center placeholder:text-center' placeholder='Area' />
                 </div>
@@ -142,13 +142,13 @@ const AddProperty = () => {
 
             {/* City & Catigorey */}
             <div className="flex justify-between items-center space-x-2">
-                <select name="a" {...register("catigorey_id")} id="dd" className='focus:outline-none p-2 rounded-md w-full text-center'>
+                <select name="a" {...register("catigorey_id")} id="dd" className='md:p-4 focus:outline-none p-2 rounded-md w-full text-center'>
                     <option value="" disabled>Catigorey</option>
                     {Catigorey.map(catigorey => {
                         return <option key={catigorey.id} value={catigorey.id}>{catigorey.name}</option>
                     })}
                 </select>
-                <select name="d" {...register("city_id")} id="aaa" className='focus:outline-none p-2 rounded-md w-full text-center'>
+                <select name="d" {...register("city_id")} id="aaa" className='md:p-4 focus:outline-none p-2 rounded-md w-full text-center'>
                     <option value="" disabled>City</option>
                     {cities.map(city => {
                         return <option key={city.id} value={city.id}>{city.name}</option>
@@ -159,26 +159,26 @@ const AddProperty = () => {
 
             {/*  Beth Bath Kitchen Garage*/}
             <div className="flex justify-between items-center mt-2">
-                <h1>Add Room (Optional)</h1>
-                <span className='text-2xl ' onClick={()=>setShowAddRoom(prev => !prev)}><MdOutlinePlaylistAdd/></span>
+                <h1 className='md:text-xl'>Add Room (Optional)</h1>
+                <span className='text-2xl md:text-3xl ' onClick={()=>setShowAddRoom(prev => !prev)}><MdOutlinePlaylistAdd/></span>
             </div>
-            <div className={showAddRoom ? " flex justify-between items-center space-x-2 duration-700 ease-in-out" : "-translate-x-[1000px] duration-700 ease-in-out"}>
+            <div className={showAddRoom ? " flex justify-between items-center space-x-2 duration-700 ease-in-out md:mt-3" : "-translate-x-[1000px] duration-700 ease-in-out"}>
                 {showAddRoom && (<>
                 <div className=''>
                     {errors && <h1 className='text-rose-500'>{errors.bedroom?.message}</h1>}
-                    <input {...register("bedroom")} type="number" className='text-center focus:outline-none rounded-md py-2 w-full placeholder:text-center' placeholder='Bed' />
+                    <input {...register("bedroom")} type="number" className='text-center focus:outline-none rounded-md py-2 md:py-4 w-full placeholder:text-center' placeholder='Bed' />
                 </div>
                 <div className=''>
                     {errors && <h1 className='text-rose-500'>{errors.bathroom?.message}</h1>}
-                    <input {...register("bathroom")} type="number" className='text-center focus:outline-none rounded-md py-2 w-full placeholder:text-center' placeholder='Bath' />
+                    <input {...register("bathroom")} type="number" className='text-center focus:outline-none rounded-md py-2 md:py-4 w-full placeholder:text-center' placeholder='Bath' />
                 </div>
                 <div className=''>
                     {errors && <h1 className='text-rose-500'>{errors.kitchen?.message}</h1>}
-                    <input {...register("kitchen")} type="number" className='text-center focus:outline-none rounded-md py-2 w-full placeholder:text-center' placeholder='Kitchen' />
+                    <input {...register("kitchen")} type="number" className='text-center focus:outline-none rounded-md py-2 md:py-4 w-full placeholder:text-center' placeholder='Kitchen' />
                 </div>
                 <div className=''>
                     {errors && <h1 className='text-rose-500'>{errors.garage?.message}</h1>}
-                    <input {...register("garage")} type="number" className='w-full text-center focus:outline-none rounded-md py-2  placeholder:text-center' placeholder='Garage' />
+                    <input {...register("garage")} type="number" className='w-full text-center focus:outline-none rounded-md py-2 md:py-4  placeholder:text-center' placeholder='Garage' />
                 </div>
                 </>)}
             </div>
@@ -186,7 +186,7 @@ const AddProperty = () => {
             {/* Address */}
             <div className='border-b-2 bg-white rounded-2xl p-2 my-3  '>
                 {errors.address && <h1 className='text-rose-500 text-md text-center'>{errors.address?.message}</h1>}
-                <input {...register("address")} type="text" className='p-2 focus:outline-none w-full text-center placeholder:text-center' placeholder='Address' />
+                <input {...register("address")} type="text" className='p-2 md:p-3 focus:outline-none w-full text-center placeholder:text-center' placeholder='Address' />
             </div>
 
             {/* register Button */}

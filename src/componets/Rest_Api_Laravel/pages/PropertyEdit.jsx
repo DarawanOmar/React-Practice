@@ -8,9 +8,13 @@ import { MdOutlinePlaylistAdd } from 'react-icons/md'
 
 const PropertyEdit = () => {
   const{id} = useParams();
+
+  // const [showAddImage, setShowAddImage] = useState(false)
   const [cities, setCities] = useState([])
   const [Catigorey, setCatigorey] = useState([])
   const [showAddRoom, setShowAddRoom] = useState(false)
+  const [showAddCityAndCatigorey, setShowAddCityAndCatigorey] = useState(false)
+  const [showAddAreaAndPrice, setShowAddAreaAndPrice] = useState(false)
   const navigate = useNavigate();
   const [title, settitle] = useState('')
   const [disc, setdisc] = useState('')
@@ -25,6 +29,7 @@ const PropertyEdit = () => {
   const [bathroom, setBathroom] = useState('')
   const [kitchen, setKitchen] = useState('')
   const [garage, setGarage] = useState('')
+  const [image, setImage] = useState(null);
 
 
   useEffect(()=>{
@@ -57,7 +62,11 @@ const PropertyEdit = () => {
     }
     fetchProerty()
   },[])
-
+//   const handleImageChange = (event) => {
+//     setImage(event.target.files[0]);
+// };
+// const formData = new FormData();
+// formData.append('image', image);
   const submitForm = async (e) => {
     e.preventDefault();
     const update = await axios2.put(`http://localhost:8000/api/profile/updateproperties/${id}`,
@@ -78,9 +87,9 @@ const PropertyEdit = () => {
 
 
   return (
-    <div className=" ">
+    <div className="max-w-7xl mx-auto ">
       {/* Top Text */}
-      <div className="flex items-center pb-6 p-2">
+      <div className="flex items-center  p-2">
           <Link to='/profile' className='text-xl text-indigo-500'><IoIosArrowBack/></Link>
           <h1 className='text-xl font-bold'><Link to='/profile'> Own Profile</Link></h1>
       </div>
@@ -96,23 +105,33 @@ const PropertyEdit = () => {
             <textarea value={disc} onChange={(e) => setdisc(e.target.value)} cols="30" rows="2"  className='p-2 text-center  w-full rounded-xl focus:outline-none ' placeholder='Discription' />
 
             {/* Area & Price */}
-            <div className='flex items-center space-x-2'>
-                {/* Price */}
-                    <div className='flex flex-col items-center'>
-                      <h1 className='text-center font-bold'>Price</h1>
-                      <input value={price} onChange={(e) => setprice(e.target.value)}  type="number" className='p-3 w-full  text-center focus:outline-none  rounded-xl  ' placeholder='Price' />
-                    </div>
+            <div className="flex justify-between items-center mt-2">
+                <h1 className='font-bold'>Area & Price (Optional)</h1>
+                <span className='text-2xl ' onClick={()=>setShowAddAreaAndPrice(prev => !prev)}><MdOutlinePlaylistAdd/></span>
+            </div>
+            <div  className={showAddAreaAndPrice ? " flex justify-between items-center space-x-2 duration-700 ease-in-out" : "-translate-x-[1000px] duration-700 ease-in-out"}>
+               {showAddAreaAndPrice && <>
+              {/* Price */}
+                <div className='flex flex-col items-center'>
+                  <h1 className='text-center font-bold'>Price</h1>
+                  <input value={price} onChange={(e) => setprice(e.target.value)}  type="number" className='p-3 w-full  text-center focus:outline-none  rounded-xl  ' placeholder='Price' />
+                </div>
                 {/*  Area*/}
-                
-                    <div className='flex flex-col items-center'>
-                      <h1 className='text-center font-bold'>Area</h1>
-                      <input value={area}  onChange={(e) => setarea(e.target.value)} type="number" className='p-3 w-full text-center  focus:outline-none  rounded-xl  ' placeholder='Area' /></div>
-                    </div>
+                <div className='flex flex-col items-center'>
+                  <h1 className='text-center font-bold'>Area</h1>
+                  <input value={area}  onChange={(e) => setarea(e.target.value)} type="number" className='p-3 w-full text-center  focus:outline-none  rounded-xl  ' placeholder='Area' />
+                </div>
+                </>}
+            </div>
 
             {/* City & Categorey */}
-            <div className="flex justify-between items-center space-x-[1px] rounded-2xl p-2">
-
-              <div className='flex flex-col items-center'>
+            <div className="flex justify-between items-center mt-2">
+                <h1 className='font-bold'>City & Catigorey (Optional)</h1>
+                <span className='text-2xl ' onClick={()=>setShowAddCityAndCatigorey(prev => !prev)}><MdOutlinePlaylistAdd/></span>
+            </div>
+            <div className={showAddCityAndCatigorey ? " flex justify-between items-center space-x-2 duration-700 ease-in-out" : "-translate-x-[1000px] duration-700 ease-in-out"}>
+            {showAddCityAndCatigorey && <>
+              <div className='flex flex-col items-center '>
                 <h1 className='text-center font-bold'>Catigorey</h1>
                 <select 
                   onChange={(e) => setCatigore(e.target.value)}
@@ -127,13 +146,14 @@ const PropertyEdit = () => {
                 <h1 className='text-center font-bold'>City</h1>
                 <select 
                 onChange={(e) => setcity(e.target.value)}
-                  className='focus:outline-none p-2 rounded-md'>
+                  className='focus:outline-none p-2 rounded-md '>
                     <option value={city}>{cityShow?.name}</option>
                     {cities.map(city => {
                         return <option key={city.id} value={city.id}>{city.name}</option>
                     })}
                 </select>
               </div>
+              </>}
             </div>
             
             {/*  Beth Bath Kitchen Garage*/}
@@ -161,12 +181,24 @@ const PropertyEdit = () => {
                     </div>
                 </>) : null}
             </div>
+            {/*  Add Photo*/}
+            {/* <div className="flex justify-between items-center mt-2">
+                <h1 className='font-bold'>Photo</h1>
+                <span className='text-2xl ' onClick={()=>setShowAddImage(prev => !prev)}><MdOutlinePlaylistAdd/></span>
+            </div>
+            <div className={showAddImage ? " flex justify-between items-center space-x-2 duration-700 ease-in-out" : "-translate-x-[1000px] duration-700 ease-in-out"}>
+                {showAddImage ? (<>
+                    <div className="flex justify-center items-center  bg-gray-200">
+                      <input onChange={handleImageChange} type="file" className=' text-center focus:outline-none rounded-md py-2 w-full' />
+                    </div>
+                </>) : null}
+            </div> */}
 
 
             {/* Address */}
             <h1 className='text-center font-bold'>Address</h1>
 
-            <input value={address} onChange={(e) => setaddress(e.target.value)}  type="text" className='p-2 rounded-xl  w-full focus:outline-none' placeholder='Address' />
+            <input value={address} onChange={(e) => setaddress(e.target.value)}  type="text" className='p-2 text-center rounded-xl  w-full focus:outline-none' placeholder='Address' />
 
             <div className='text-center mt-3 pb-[70px]'>
                 <button onClick={submitForm} className='bg-indigo-600 text-white py-4 px-20 rounded-xl'>Update Property</button>

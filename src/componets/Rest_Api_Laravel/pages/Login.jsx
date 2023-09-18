@@ -29,8 +29,8 @@ const Login = () => {
     const submitForm = async (data) => {
         setLoaderLogin(true);
         try {
-            const response = await axios.post('http://localhost:8000/api/login', data, {headers: {"Accept":"application/json"}});
-            if(response){
+            const response = await axios.post('http://localhost:8000/api/login', data, {headers: {"Accept":"application/json","Content-Type":"application/json"}});
+            if(response.data.token){
                 localStorage.setItem('token',response.data.token)
                 navigate('/home')
                 setLoaderLogin(false);
@@ -46,23 +46,23 @@ const Login = () => {
 
     if(loaderLogin){
         return(
-            <div className="mt-20">
-               <Lottie animationData={loginloader} loop={true}/>
+            <div className="pt-20 md:mt-0 md:w-2/3 h-screen md:flex md:justify-center md:items-center md:mx-auto">
+               <Lottie animationData={loginloader}  loop={true}/>
             </div>
         )
     }
 
     return (
-    <div className="bg-blue-600 font-serif">
+    <div className="bg-blue-600 md:bg-neutral-100 font-serif max-w-7xl mx-auto md:h-screen">
         {/* Text Top */}
         <div className='pt-32 py-10 flex items-center justify-center'>
             <img className='w-10 h-10' src={apartment} alt="" />
-            <h1 className='text-center font-bold text-3xl text-white '>Real Estate</h1>
+            <h1 className='text-center font-bold text-3xl text-white md:text-black'>Real Estate</h1>
         </div>
-        <div className="bg-neutral-200 rounded-t-[60px] pb-[100px] p-10 ">
+        <div className="bg-neutral-200 rounded-t-[60px] md:rounded-[60px] pb-[100px] p-10 md:w-1/2 md:mx-auto">
 
             <div className="pb-10">
-                <h1 className='text-center font-bold text-2xl '>Login</h1>
+                <h1 className='text-center font-bold text-2xl md:text-3xl'>Login</h1>
             </div>
 
             {/* Form */}
@@ -73,28 +73,26 @@ const Login = () => {
                     {/* username */}
                     {errors.email && <h1 className='text-rose-500 text-center text-sm'>{errors.email?.message}</h1>}
                     <div className='flex items-center border-b-2 '>
-                        <span><img className='w-9 h-9 ' src={user} alt="" /></span>
-                        <input {...register("email")} type="email" className='p-2 focus:outline-none' placeholder='username' />
+                        <span><img className='w-9 h-9 md:w-12 md:h-12' src={user} alt="" /></span>
+                        <input {...register("email")} type="email" className='p-2  focus:outline-none md:w-full md:p-4 placeholder:md:text-xl' placeholder='username' />
                     </div>
                     {/* password */}
                     {errors.password && <h1 className='text-rose-500 text-center text-sm'>{errors.password?.message}</h1>}
                     <div className='flex items-center relative'>
-                        <span><img className='w-9 h-9 ' src={password} alt="" /></span>
-                        <input  {...register("password")} type={showPassword ? "text" : "password"} className='p-2 focus:outline-none' placeholder='password' />
+                        <span><img className='w-9 h-9 md:w-14 md:h-12' src={password} alt="" /></span>
+                        <input  {...register("password")} type={showPassword ? "text" : "password"} className='p-2 focus:outline-none md:w-full md:p-4 placeholder:md:text-xl' placeholder='password' />
                         {!showPassword ? <span onClick={()=>setShowPassword(!showPassword)}><BiHide/></span> : <span onClick={()=>setShowPassword(!showPassword)}><BiShow/></span>}
                         {/* <span><BiShow/></span> */}
                     </div>
                 </div>
                 <div className="flex justify-between items-center pb-3">
-                    <Link 
-                    to='/forgotpassword'
-                     className='text-gray-500'>Forget Password</Link>
-                    <button type='submit' className='bg-blue-600 text-white px-10 py-3 rounded-xl'>Login</button>
+                    <Link to='/forgotpassword'className='text-gray-500 md:text-xl'>Forget Password</Link>
+                    <button type='submit' className='bg-blue-600 text-white px-10 py-3 rounded-xl md:text-xl'>Login</button>
                 </div>
             </form>
 
-            <div className="pb-5">
-                Create Account <Link to='/register' className='text-blue-500'> Register</Link>
+            <div className="pb-5 md:text-xl">
+                Create Account <Link to='/register' className='text-blue-500 '> Register</Link>
             </div>
 
         </div>

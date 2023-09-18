@@ -16,7 +16,7 @@ const ListPropritesFavoraite = ({ property , setReload}) => {
         'Content-Type': 'application/json'
     }})
     if(response){
-        console.log("Data Add SuccessFully");
+        console.log("Property Remove  SuccessFully");
         setReload(prev=>!prev)
     }else{
         console.log("Faild Add");

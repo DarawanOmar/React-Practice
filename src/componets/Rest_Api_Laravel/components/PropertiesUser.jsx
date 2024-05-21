@@ -8,11 +8,13 @@ import { Link } from 'react-router-dom'
 import axios from '../api/axios'
 import { useState } from 'react'
 import Tests from '../pages/Tests'
+import { useSelector } from 'react-redux'
 
 const PropertiesUser = ({id,title, price, bedroom, bathroom, kitchen, area, city, catigorey, photos, garage}) => {
 
     const [loader, setLoader] = useState(false)
     const [user, setuser] = useState([]);
+    const{isDark} = useSelector((state) => state.dark)
 
     useEffect(()=>{
         setLoader(true)
@@ -34,7 +36,7 @@ const PropertiesUser = ({id,title, price, bedroom, bathroom, kitchen, area, city
       }
 
   return (
-    <div className='bg-white rounded-[30px] overflow-visible w-full shadow-xl '>
+    <div className={` rounded-[30px] overflow-visible w-full shadow-xl ${isDark ? " bg-zinc-800 text-white  duration-500" : "bg-neutral-100 text-black duration-500"}`}>
       <div className="relative flex flex-col space-y-3 p-3">
           {/* Image */}
           {photos.length > 0 ?

@@ -3,13 +3,15 @@ import { FaBath, FaBed } from 'react-icons/fa'
 import { GiCampCookingPot } from 'react-icons/gi'
 import { ImLocation } from 'react-icons/im'
 import { TbChartAreaLineFilled } from 'react-icons/tb'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 const PropertiesPage = ({id, title, price, bedroom, bathroom, kitchen, area, city, catigorey, photos}) => {
+  const{isDark} = useSelector((state) => state.dark)
 
 
   return (
-    <div className='bg-white rounded-[30px] overflow-visible w-full shadow-xl '>
+    <div className={`${isDark ? " bg-zinc-900 text-white  duration-500 " : "bg-neutral-100 text-black duration-500"} rounded-[30px] overflow-visible w-full shadow-xl `}>
     <div className="flex flex-col space-y-3 p-3">
         {/* Image */}
         {photos.length > 0 ?

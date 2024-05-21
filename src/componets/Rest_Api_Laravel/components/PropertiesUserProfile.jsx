@@ -8,11 +8,13 @@ import { RiEdit2Fill } from 'react-icons/ri'
 import { GiHomeGarage } from 'react-icons/gi'
 import { Link } from 'react-router-dom'
 import ModelDeleteProperty from './ModelDeleteProperty'
+import { useSelector } from 'react-redux'
 
 
 const PropertiesUserProfile = ({id,title, price, bedroom, bathroom, kitchen, area, city, catigorey,photos, garage ,loader, deletePropery, setId, setReload, showNotifiDelete}) => {
 
   const [showModel, setShowModel] = useState(false)
+  const{isDark} = useSelector((state) => state.dark)
 
   if(loader) {
     return (
@@ -33,7 +35,7 @@ const PropertiesUserProfile = ({id,title, price, bedroom, bathroom, kitchen, are
     )
   }
   return (
-    <div className='bg-white rounded-[30px] overflow-visible w-full shadow-xl '>
+    <div className={`${isDark ? " bg-zinc-900 text-white duration-500 " : "bg-neutral-100 text-black duration-500"} rounded-[30px] overflow-visible w-full shadow-xl `}>
     <div className="relative flex flex-col space-y-3 p-3">
         {/* Image */}
         {photos.length > 0 ?

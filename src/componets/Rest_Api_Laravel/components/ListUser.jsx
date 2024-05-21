@@ -5,10 +5,12 @@ import { Link } from 'react-router-dom'
 import Tests from '../pages/Tests'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 
 const ListUser = ({ id, name, email, image ,photo}) => {
     const[loader,setLoader] = useState(true)
+  const{isDark} = useSelector((state) => state.dark)
     
     useEffect(()=>{ setTimeout(() => {
         setLoader(false)
@@ -18,7 +20,7 @@ const ListUser = ({ id, name, email, image ,photo}) => {
     }
 
   return (
-    <div className="flex justify-between bg-white rounded-2xl p-2">
+    <div className={`flex justify-between ${isDark ? " bg-zinc-800 text-white  duration-500" : "bg-neutral-100 text-black duration-500"} rounded-2xl p-2`}>
         <div className="">
             {image ?
                 <img className='w-16 h-16 rounded-[10px] object-cover' src={`http://localhost:8000/upload/users/${image}`}  alt="" />

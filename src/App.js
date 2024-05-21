@@ -1,5 +1,6 @@
 import React from "react";
 import RunRestApiLaravel from "./componets/Rest_Api_Laravel/RunRest_Api_Laravel";
+// import RunCard from "./componets/Card/RunCard";
 // import RunSearchingWithApi from "./componets/Searching/SearchingWithApi/RunSearchingWithApi";
 // import RunFirebase from "./componets/Firebase/RunFirebase";
 // import RunShoppingContext from "./componets/useContext/shopping/RunShoppingContext";
@@ -19,14 +20,12 @@ import RunRestApiLaravel from "./componets/Rest_Api_Laravel/RunRest_Api_Laravel"
 // import RunMainMobileShopping from "./componets/redux/mobile_Shopping/RunMainMobileShopping";
 // import RunPost from "./componets/redux/Post/RunPost";
 // import RunContext from "./componets/useContext/context/RunContext";
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./componets/Rest_Api_Laravel/features/store";
 
-function App() {  
-
-
-
+function App() {
   return (
-
     <div className="App">
       {/* <RunRedux/> */}
       {/* <RunUseContext/> */}
@@ -46,12 +45,15 @@ function App() {
       {/* <RunShoppingContext/> */}
       {/* <RunFirebase/> */}
       {/* <RunSearchingWithApi/> */}
+      {/* <RunCard/> */}
+      <Provider store={store}>
         <BrowserRouter>
-          <div className="bg-neutral-100"><RunRestApiLaravel/></div>
+          <div className="">
+            <RunRestApiLaravel />
+          </div>
         </BrowserRouter>
-
+      </Provider>
     </div>
-
   );
 }
 

@@ -24,24 +24,24 @@ const ModelDeleteProperty = ({setShowModel, id, deletePropery, setId, setReload,
   return (
     <div className="fixed inset-0 z-10 bg-black bg-opacity-20 backdrop-blur-sm flex justify-center items-center ">
       <div className="flex flex-col px-3">
-        <div className= 'px-2 rounded-md bg-gradient-to-r from-indigo-50  via-indigo-200  to-indigo-50 text-black'>
+        <div className= 'px-2  rounded-md bg-gradient-to-r from-indigo-50  via-indigo-200  to-indigo-50 text-black'>
 
-          <div className="flex justify-between items-center p-1">
-              <h1 className='font-bold'>Delete Property</h1>
-              <button onClick={() => setShowModel(false)} className='bg-gradient-to-r from-red-600 to-red-400 rounded-full w-5 h-5 flex justify-center items-center'><span className='text-white'>x</span></button>
+          <div className="flex justify-between items-center p-1 ">
+              <h1 className='font-bold md:text-2xl'>Delete Property</h1>
+              <button onClick={() => setShowModel(false)} className='bg-gradient-to-r from-red-600 to-red-400 rounded-full md:text-xl w-5 h-5 flex justify-center items-center'><span className='text-white'>x</span></button>
           </div>
 
           <div className='flex flex-col p-4 justify-center items-center text-center '>
             <div className='flex items-center pb-2 '>
               <span className='text-2xl text-red-500'><MdWarning/></span>
-              <h1 className='font-bold text-xl'>Warning</h1>
+              <h1 className='font-bold text-xl md:text-2xl'>Warning</h1>
             </div>
-            <p>Are You Sure Want To Delete Property ? </p>
+            <p className='md:text-xl'>Are You Sure Want To Delete Property ? </p>
           </div>
 
             <div className='flex justify-center items-center space-x-4 mb-3'>
-                <button onClick={() => setShowModel(false)} className='bg-gradient-to-r from-red-600 to-red-400 text-white px-4 py-1 rounded-md'>No</button>
-                <button onClick={handleDeletePropety} className='bg-gradient-to-r from-green-600 to-green-400 text-white px-4 py-1 rounded-md'>Yes</button>
+                <button onClick={() => setShowModel(false)} className='bg-gradient-to-r from-red-600 to-red-400 text-white md:text-xl px-4 py-1 rounded-md'>No</button>
+                <button onClick={handleDeletePropety} className='bg-gradient-to-r from-green-600 to-green-400 text-white md:text-xl px-4 py-1 rounded-md'>Yes</button>
             </div>
         </div>
       </div>

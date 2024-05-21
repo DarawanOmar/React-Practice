@@ -4,7 +4,7 @@ import React from 'react'
 const CommentsList = ({user,comments}) => {
 
   return (
-    <div className='bg-gradient-to-r from-indigo-50  via-indigo-200  to-indigo-50  rounded-md p-4 shadow-xl'>
+    <div className='bg-gradient-to-r from-indigo-50  via-indigo-200 text-black to-indigo-50  rounded-md p-4 shadow-xl'>
        
         <div className="flex py-4 items-center space-x-2 text-xs">
           {user.image ? 

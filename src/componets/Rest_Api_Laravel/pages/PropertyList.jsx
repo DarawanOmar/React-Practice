@@ -6,12 +6,14 @@ import { BsFillTelephoneFill } from 'react-icons/bs'
 import { TiLocation } from 'react-icons/ti'
 import { TbChartAreaLineFilled } from 'react-icons/tb'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const PropertyList = ({title, price, bedroom, bathroom, kitchen, area, garage, city, catigorey, user, description, photos, address}) => {
+    const{isDark} = useSelector((state) => state.dark)
 
     return (
     <div className=' '>
-        <div className="bg-white rounded-2xl flex flex-col space-y-3 p-3 md:p-8 md:shadow-xl">
+        <div className={`${isDark ? " bg-zinc-900 text-white  duration-500" : "bg-neutral-100 text-black duration-500"} rounded-2xl flex flex-col space-y-3 p-3 md:p-8 md:shadow-xl`}>
             {/* Image */}
             {photos.length > 0 ?
               <img className='rounded-[35px] max-h-[160px] md:max-h-[360px] object-cover' src={photos[0]} alt="Imahe" />
@@ -40,7 +42,7 @@ const PropertyList = ({title, price, bedroom, bathroom, kitchen, area, garage, c
             </div>
         </div>
         {/* user Infon */}
-        <div className="flex flex-col space-y-3 p-3 bg-white rounded-2xl my-8   md:shadow-xl">
+        <div className={`flex flex-col space-y-3 p-3 ${isDark ? " bg-zinc-900 text-white " : "bg-neutral-100 text-black"} rounded-2xl my-8   md:shadow-xl`}>
             <div className='flex items-center'>
                 {user?.image ? 
                     <Link to={`/profileuser/${user.id}`}><img className='w-12 h-12 object-cover rounded-xl' src={user.photo} alt="user" /></Link>

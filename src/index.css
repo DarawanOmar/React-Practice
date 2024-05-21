@@ -1,29 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Marhey&family=Roboto+Condensed:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Marhey&family=Roboto+Condensed:wght@300;400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Marhey&family=Merriweather:wght@300&family=Roboto+Condensed:wght@300&family=Work+Sans&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Heebo&family=Marhey&family=Merriweather:wght@300&family=Roboto+Condensed:wght@300&family=Work+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Marhey&family=Roboto+Condensed:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Marhey&family=Roboto+Condensed:wght@300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Marhey&family=Merriweather:wght@300&family=Roboto+Condensed:wght@300&family=Work+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Heebo&family=Marhey&family=Merriweather:wght@300&family=Roboto+Condensed:wght@300&family=Work+Sans&display=swap");
 
 @layer components {
-    .btn-action{
-      @apply bg-[#06c] text-white rounded-md px-4 py-1 mx-2  font-serif
-    }
-    .btn-warning {
-      @apply bg-rose-500 text-white px-4 py-1 mx-2 rounded-md  font-serif
-    }
-    .btn-success {
-      @apply bg-green-500 text-white px-4 py-1 mx-2 rounded-md  font-serif
-    }
-  
-    .btn-hover:hover{
-      @apply opacity-75 duration-500
-    }
+  .btn-action {
+    @apply bg-[#06c] text-white rounded-md px-4 py-1 mx-2  font-serif;
+  }
+  .btn-warning {
+    @apply bg-rose-500 text-white px-4 py-1 mx-2 rounded-md  font-serif;
+  }
+  .btn-success {
+    @apply bg-green-500 text-white px-4 py-1 mx-2 rounded-md  font-serif;
   }
 
+  .btn-hover:hover {
+    @apply opacity-75 duration-500;
+  }
+}
 
 html {
   scroll-behavior: smooth;
+  background-color: #f3f3ff;
 }
-

@@ -1,10 +1,9 @@
-
-
+import { useSelector } from "react-redux"
 
 const Tests = () => {
-
+  const{isDark} = useSelector((state) => state.dark)
   return (
-    <div className='flex space-x-3   rounded-3xl bg-white p-5'>
+    <div className={`flex space-x-3   rounded-3xl ${isDark ? "bg-black" : "bg-white"}  p-5`}>
     {/* Image */}
       <p className='rounded-[20px] w-20 h-20 bg-gray-300 animate-pulse'></p>
       {/* Texts */}
